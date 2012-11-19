@@ -1,0 +1,88 @@
+WEBVTT
+
+00:00.001 --> 00:03.075
+So, I am just gonna look at my screen
+
+00:03.075 --> 00:08.340
+Anyways, so, I am here to talk about harnessing the awesome power of streems
+
+00:08.340 --> 00:12.790
+uh, streams are I think the most underused part of Node
+
+00:12.790 --> 00:17.325
+and they are what makes Node and JavaScript in general really really amazing
+
+00:17.325 --> 00:22.095
+So, back in the sixties, uh, sort of this recurring trope
+
+00:22.095 --> 00:23.885
+No, I can't, shut up!
+
+00:23.885 --> 00:31.555
+So, back in the sixties, this, this guy, Doug..., actual "I" can't make vigor
+
+00:31.555 --> 00:34.490
+this guy, Doug McIlroy
+
+00:34.490 --> 00:42.030
+uh, was like kind of , uh, like, put his folder on the ground, 
+whatever that is and said:
+
+00:42.030 --> 00:46.420
+No, Unix is gonna have Streams and I am gonna fucking quit if doesn't
+
+00:46.420 --> 00:49.985
+And that's awesome, so, we have Streams now, because of this crazy guy
+
+00:49.985 --> 00:55.455
+uh, but basicly Streams let you treat programs as just little pieces
+
+00:55.455 --> 00:58.830
+little pieces like garden hoses that you can just plumb together
+
+00:58.830 --> 01:01.915
+I think plumbing metaphor a really apt for lot of this staff
+
+01:01.915 --> 01:04.435
+So, the first kind of Streams that we have is readable Stream
+
+01:04.435 --> 01:08.980
+And so, readable Streams are just event vendors that made a data event and an end event
+
+01:08.980 --> 01:10.645
+Maybe some other one, those aren't important
+
+01:10.645 --> 01:17.120
+uh, so, we can write a readable stream here
+
+01:17.120 --> 01:19.525
+vi start.js(explain: It seams like opening a file with vi editor)
+
+01:19.525 --> 01:23.290
+Ok, so, first thing you do, uh, you've probably seen this before
+
+01:23.290 --> 01:29.155
+uh, we fs.createReadStream and we can just like 
+here I've got dictionary of like hundred thousand words
+
+01:29.155 --> 01:35.120
+uh, and I can just pipe this just like in Unix was pipe stderr to stdout
+
+01:35.120 --> 01:42.770
+And if I run this, uh, cool, so I get light all of the words printed just on stdout
+
+01:42.770 --> 01:50.715
+What's really cool about Streams is you don't you know buffer the whole thing
+into memory first. You just can incrementally output every single piece
+
+01:50.715 --> 01:56.310
+uh, in the stream and that's really cool because you get results like immediately
+
+01:56.310 --> 02:05.285
+And, Let you write a lot of really interesting abstractions in the some other things
+like enter false if you don't want stream to give writing to stdout you do that a lot
+
+02:05.285 --> 
+
+
+
