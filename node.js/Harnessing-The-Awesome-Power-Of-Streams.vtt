@@ -80,9 +80,35 @@ uh, in the stream and that's really cool because you get results like immediatel
 
 01:56.310 --> 02:05.285
 And, Let you write a lot of really interesting abstractions in the some other things
-like enter false if you don't want stream to give writing to stdout you do that a lot
+like {end: false} if you don't want stream to give up writing to stdout you do that about
 
-02:05.285 --> 
+02:05.285 --> 02:11.145
+uh, so, to write a stream like without just using a stream, it's a little bit more complicated
 
+02:11.145 --> 02:16.210
+uh, the first you do for readable stream, and these little changes,
+so don't worry about memorizing all this.
 
+02:16.210 --> 02:19.780
+The first thing you do is you set readable to true, the attribute
 
+02:19.780 --> 02:25.646
+uh, it's all here. I've got just this example, it just emits the data event
+and (the data) just has counter
+
+02:25.646 --> 02:30.950
+So, if you run that, ah, ah, ah, 5.js
+
+02:30.950 --> 02:35.560
+Cool, so in the very bottom down there, you can see this infinite string of digits
+
+02:35.560 --> 02:38.520
+It's getting faster and faster, cuz, there are more digits and real numbers
+
+02:38.520 --> 02:47.865
+But, uh, if we want to say end that after uh, after two seconds, 
+we can just emit an end event.
+
+02:47.865 -->
+
+we can just emit 
