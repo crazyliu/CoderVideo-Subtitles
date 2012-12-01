@@ -105,10 +105,40 @@ Cool, so in the very bottom down there, you can see this infinite string of digi
 02:35.560 --> 02:38.520
 It's getting faster and faster, cuz, there are more digits and real numbers
 
-02:38.520 --> 02:47.865
+02:38.520 --> 02:49.370
 But, uh, if we want to say end that after uh, after two seconds, 
 we can just emit an end event.
 
-02:47.865 -->
+02:49.370 --> 02:52.290
+So, one, two and it's done!
 
-we can just emit 
+02:52.290 --> 03:00.385
+Cool, so, what's really cool I mean besides the fact 
+we can just pipe things around, uh.
+
+03:00.385 --> 03:04.960
+We can actually also create writable stream since scratch
+
+03:04.960 --> 03:11.155
+So, like you probably, my hopefully, have seen this 
+in Node if you used Node a lot
+
+03:11.155 --> 03:14.760
+fs.createWriteStream, it's awesome, because
+
+03:14.760 --> 03:18.250
+all you have to do is just write data to it
+
+03:18.250 --> 03:27.595
+and it has been in a file, so you don't have to like
+have a big stream or big buffer like concat all these 
+messages one by one on to some growing thing
+
+03:27.595 --> 03:35.185
+You can just, uh, well, so I run this program and I 
+cat output.txt
+
+03:35.185 --> 03:39.235
+oh, cool, I have the same output as in my file
+
+03:39.235 --> 
