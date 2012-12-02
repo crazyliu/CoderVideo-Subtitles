@@ -141,4 +141,67 @@ cat output.txt
 03:35.185 --> 03:39.235
 oh, cool, I have the same output as in my file
 
-03:39.235 --> 
+03:39.235 --> 03:48.125
+uh, so another cool thing you can do is you can take 
+readable streams like process.stdin as a standard readable streams
+and pipe them to your writable stream
+
+03:48.125 --> 03:50.720
+So, if I run this program which is 2(.js)
+
+03:50.720 --> 03:58.840
+then , abc, def, and we'll cat output.txt
+and see that it's exactly what we typed,
+so that's as we might expect
+
+03:58.840 --> 04:04.330
+So, creating these writable streams since scratch
+is a bit more complicated
+
+04:04.330 --> 04:06.145
+so, the first thing we do is set writable to true
+
+04:06.145 --> 04:12.665
+this is used by pipe internally to make it, 
+so that we can process.stdin.pipe to writable stream
+
+04:12.665 --> 04:17.810
+So we said a writable stream and we set an end function
+and of course you have to be a little more careful in Node
+
+04:17.810 --> 04:20.985
+cuz, it is just of convention, or you can call 
+.end with an object
+
+04:20.985 --> 04:27.550
+And that we'll call .write, so that's just one thing
+to be a little careful of
+
+04:27.550 --> 04:31.025
+But if you use some libraries that problem goes away
+
+04:31.025 --> 04:42.410
+So, if we run this program, we can do a similar kind
+of thing and here it's just log in all of the values 
+that I am typing
+
+04:42.410 --> 04:47.520
+uh, if I end this stream, I get a handy little end message
+that accesses a mention point
+
+04:47.520 --> 04:52.690
+Triple cool! So, we can actually do something useful here
+this custom writable stream.
+
+04:52.690 --> 04:57.480
+How about let's just count all the bytes and when the stream
+ends, we just print that out to stdout
+
+04:57.480 --> 05:04.830
+So here write, you now have byte equal zero and call sequals 
+the buf.length ever time, at the end, I print byte count message
+
+05:04.830 --> 
+
+
+
