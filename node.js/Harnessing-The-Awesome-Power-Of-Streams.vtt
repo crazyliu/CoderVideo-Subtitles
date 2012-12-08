@@ -197,11 +197,19 @@ this custom writable stream.
 How about let's just count all the bytes and when the stream
 ends, we just print that out to stdout
 
-04:57.480 --> 05:04.830
+04:57.480 --> 05:06.045
 So here write, you now have byte equal zero and call sequals 
 the buf.length ever time, at the end, I print byte count message
 
-05:04.830 --> 
+05:06.045 --> 05:16.080
+So, if I run this program, abc, def, and now I end it,
+and byte counts 8 which make sense because three and a new line is 4,
+and 4 is 8, cool!
 
+05:16.080 --> 05:18.885
+So, that's writable stream.
+
+05:18.885 -->
+The next thing that I think is super important
 
 
