@@ -209,7 +209,43 @@ and 4 is 8, cool!
 05:16.080 --> 05:18.885
 So, that's writable stream.
 
-05:18.885 -->
-The next thing that I think is super important
+05:18.885 --> 05:23.360
+The next thing that I think is super important, to be realized is
+
+05:23.360 --> 05:30.245
+this is an idea(a concept) I treat from Domnita who will be a 
+recurring theme draft the sock
+
+05:30.245 --> 05:34.720
+It's called the through stream, so through stream is a readable 
+wirtable stream
+
+05:34.720 --> 05:40.005
+It's not the only kind of the readable writable stream, but it does
+as a readable writable stream that acts like a filter
+
+05:40.005 --> 05:46.785
+So, for instance, the grep program in Unix, you know,
+takes stdin and does some things and write stdout
+
+05:46.785 --> 05:48.845
+it's like from here to there
+
+05:48.845 --> 05:55.645
+So, we can make on these. If we create a new stream and we set
+both readable readable and writable to true
+
+05:55.645 --> 05:57.585
+Combining the previous two examples
+
+05:57.585 --> 06:00.885
+we can have a write stream but we can also emit data
+
+06:00.885 --> 06:06.790
+and this is really cool, so, right here, I am uh just 
+uppercasing the input that I get to make a loud stream 
+
+06:06.790 --> 06:10.925
+It'll be very loud for us, I did the same thing with the end
 
 
