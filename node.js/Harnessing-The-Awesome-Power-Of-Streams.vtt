@@ -1,0 +1,251 @@
+WEBVTT
+
+00:00.001 --> 00:03.075
+So, I am just gonna look at my screen
+
+00:03.075 --> 00:08.340
+Anyways, so, I am here to talk about harnessing the awesome power of streems
+
+00:08.340 --> 00:12.790
+uh, streams are I think the most underused part of Node
+
+00:12.790 --> 00:17.325
+and they are what makes Node and JavaScript in general really really amazing
+
+00:17.325 --> 00:22.095
+So, back in the sixties, uh, sort of this recurring trope
+
+00:22.095 --> 00:23.885
+No, I can't, shut up!
+
+00:23.885 --> 00:31.555
+So, back in the sixties, this, this guy, Doug..., actual "I" can't make vigor
+
+00:31.555 --> 00:34.490
+this guy, Doug McIlroy
+
+00:34.490 --> 00:42.030
+uh, was like kind of , uh, like, put his folder on the ground, 
+whatever that is and said:
+
+00:42.030 --> 00:46.420
+No, Unix is gonna have Streams and I am gonna fucking quit if doesn't
+
+00:46.420 --> 00:49.985
+And that's awesome, so, we have Streams now, because of this crazy guy
+
+00:49.985 --> 00:55.455
+uh, but basicly Streams let you treat programs as just little pieces
+
+00:55.455 --> 00:58.830
+little pieces like garden hoses that you can just plumb together
+
+00:58.830 --> 01:01.915
+I think plumbing metaphor a really apt for lot of this staff
+
+01:01.915 --> 01:04.435
+So, the first kind of Streams that we have is readable Stream
+
+01:04.435 --> 01:08.980
+And so, readable Streams are just event vendors that made a data event and an end event
+
+01:08.980 --> 01:10.645
+Maybe some other one, those aren't important
+
+01:10.645 --> 01:17.120
+uh, so, we can write a readable stream here
+
+01:17.120 --> 01:19.525
+vi start.js(explain: It seams like opening a file with vi editor)
+
+01:19.525 --> 01:23.290
+Ok, so, first thing you do, uh, you've probably seen this before
+
+01:23.290 --> 01:29.155
+uh, we fs.createReadStream and we can just like 
+here I've got dictionary of like hundred thousand words
+
+01:29.155 --> 01:35.120
+uh, and I can just pipe this just like in Unix was pipe stderr to stdout
+
+01:35.120 --> 01:42.770
+And if I run this, uh, cool, so I get light all of the words printed just on stdout
+
+01:42.770 --> 01:50.715
+What's really cool about Streams is you don't you know buffer the whole thing
+into memory first. You just can incrementally output every single piece
+
+01:50.715 --> 01:56.310
+uh, in the stream and that's really cool because you get results like immediately
+
+01:56.310 --> 02:05.285
+And, Let you write a lot of really interesting abstractions in the some other things
+like {end: false} if you don't want stream to give up writing to stdout you do that about
+
+02:05.285 --> 02:11.145
+uh, so, to write a stream like without just using a stream, it's a little bit more complicated
+
+02:11.145 --> 02:16.210
+uh, the first you do for readable stream, and these little changes,
+so don't worry about memorizing all this.
+
+02:16.210 --> 02:19.780
+The first thing you do is you set readable to true, the attribute
+
+02:19.780 --> 02:25.646
+uh, it's all here. I've got just this example, it just emits the data event
+and (the data) just has counter
+
+02:25.646 --> 02:30.950
+So, if you run that, ah, ah, ah, 5.js
+
+02:30.950 --> 02:35.560
+Cool, so in the very bottom down there, you can see this infinite string of digits
+
+02:35.560 --> 02:38.520
+It's getting faster and faster, cuz, there are more digits and real numbers
+
+02:38.520 --> 02:49.370
+But, uh, if we want to say end that after uh, after two seconds, 
+we can just emit an end event.
+
+02:49.370 --> 02:52.290
+So, one, two and it's done!
+
+02:52.290 --> 03:00.385
+Cool, so, what's really cool I mean besides the fact 
+we can just pipe things around, uh.
+
+03:00.385 --> 03:04.960
+We can actually also create writable stream since scratch
+
+03:04.960 --> 03:11.155
+So, like you probably, my hopefully, have seen this 
+in Node if you used Node a lot
+
+03:11.155 --> 03:14.760
+fs.createWriteStream, it's awesome, because
+
+03:14.760 --> 03:18.250
+all you have to do is just write data to it
+
+03:18.250 --> 03:27.595
+and it has been in a file, so you don't have to like
+have a big stream or big buffer like concat all these 
+messages one by one on to some growing thing
+
+03:27.595 --> 03:35.185
+You can just, uh, well, so I run this program and I 
+cat output.txt
+
+03:35.185 --> 03:39.235
+oh, cool, I have the same output as in my file
+
+03:39.235 --> 03:48.125
+uh, so another cool thing you can do is you can take 
+readable streams like process.stdin as a standard readable streams
+and pipe them to your writable stream
+
+03:48.125 --> 03:50.720
+So, if I run this program which is 2(.js)
+
+03:50.720 --> 03:58.840
+then , abc, def, and we'll cat output.txt
+and see that it's exactly what we typed,
+so that's as we might expect
+
+03:58.840 --> 04:04.330
+So, creating these writable streams since scratch
+is a bit more complicated
+
+04:04.330 --> 04:06.145
+so, the first thing we do is set writable to true
+
+04:06.145 --> 04:12.665
+this is used by pipe internally to make it, 
+so that we can process.stdin.pipe to writable stream
+
+04:12.665 --> 04:17.810
+So we said a writable stream and we set an end function
+and of course you have to be a little more careful in Node
+
+04:17.810 --> 04:20.985
+cuz, it is just of convention, or you can call 
+.end with an object
+
+04:20.985 --> 04:27.550
+And that we'll call .write, so that's just one thing
+to be a little careful of
+
+04:27.550 --> 04:31.025
+But if you use some libraries that problem goes away
+
+04:31.025 --> 04:42.410
+So, if we run this program, we can do a similar kind
+of thing and here it's just log in all of the values 
+that I am typing
+
+04:42.410 --> 04:47.520
+uh, if I end this stream, I get a handy little end message
+that accesses a mention point
+
+04:47.520 --> 04:52.690
+Triple cool! So, we can actually do something useful here
+this custom writable stream.
+
+04:52.690 --> 04:57.480
+How about let's just count all the bytes and when the stream
+ends, we just print that out to stdout
+
+04:57.480 --> 05:06.045
+So here write, you now have byte equal zero and call sequals 
+the buf.length ever time, at the end, I print byte count message
+
+05:06.045 --> 05:16.080
+So, if I run this program, abc, def, and now I end it,
+and byte counts 8 which make sense because three and a new line is 4,
+and 4 is 8, cool!
+
+05:16.080 --> 05:18.885
+So, that's writable stream.
+
+05:18.885 --> 05:23.360
+The next thing that I think is super important, to be realized is
+
+05:23.360 --> 05:30.245
+this is an idea(a concept) I treat from Domnita who will be a 
+recurring theme draft the sock
+
+05:30.245 --> 05:34.720
+It's called the through stream, so through stream is a readable 
+wirtable stream
+
+05:34.720 --> 05:40.005
+It's not the only kind of the readable writable stream, but it does
+as a readable writable stream that acts like a filter
+
+05:40.005 --> 05:46.785
+So, for instance, the grep program in Unix, you know,
+takes stdin and does some things and write stdout
+
+05:46.785 --> 05:48.845
+it's like from here to there
+
+05:48.845 --> 05:55.645
+So, we can make on these. If we create a new stream and we set
+both readable readable and writable to true
+
+05:55.645 --> 05:57.585
+Combining the previous two examples
+
+05:57.585 --> 06:00.885
+we can have a write stream but we can also emit data
+
+06:00.885 --> 06:06.790
+and this is really cool, so, right here, I am uh just 
+uppercasing the input that I get to make a loud stream 
+
+06:06.790 --> 06:10.925
+It'll be very loud for us, I did the same thing with the end
+
+
