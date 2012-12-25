@@ -248,4 +248,82 @@ uppercasing the input that I get to make a loud stream
 06:06.790 --> 06:10.925
 It'll be very loud for us, I did the same thing with the end
 
+06:10.925 --> 06:17.910
+And I'll pipe stdin to my ts, which should actually
+be called loud stream, like ls
 
+06:17.910 --> 06:24.650
+So, that is 3.js, abc, hello lisboa and now end it
+
+06:24.650 --> 06:27.805
+Oh, no, alright, I forgot to pipe that
+
+06:27.805 --> 06:33.920
+right, before, I had this, so, actually, I have to
+pipe the output somewhere for one to use it
+
+06:33.920 --> 06:43.045
+So I got 4.js and I'll say: beep boop and end it
+and we get uppercase messages
+
+06:43.045 --> 06:46.425
+Great, indeed, this is the through stream
+
+06:46.425 --> 06:49.815
+Alright, and this was writable stream and this is through stream
+
+06:49.815 --> 06:52.441
+This is a kind of picture I drew to illustrate what's going on
+
+06:52.441 --> 06:57.485
+So you have a function in the middle and you have thought these
+two little convertible machines that do the things
+
+06:57.485 --> 07:02.380
+The next kind of thing that I think is important to talk about
+is: pause stream 
+
+07:02.380 --> 07:05.540
+Pause stream is a sort of through stream
+
+07:05.540 --> 07:12.885
+well, in Node, there is a mechanism in pipe internally that 
+helps you handle back nature
+
+07:12.885 --> 07:21.680
+You call .pause and resume when you want to start it again
+a sort of like barrier a few green water and then you turn on 
+the tap to get new something
+
+07:21.680 --> 07:25.525
+Plumbing plumbing metaphors there if useful
+
+07:25.525 --> 07:28.855
+So, I have an example for a pause stream
+
+07:28.855 --> 07:30.155
+Here we can look at it
+
+07:30.155 --> 07:41.645
+So, this is an http server that creates this output.txt file
+with all of the content that we put out here
+
+07:41.645 --> 07:46.740
+So, I am gonna echo beep boop and I'll curl that and finally
+run this program
+
+07:46.740 --> 08:02.180
+So, node 0.js and this program I'll curl -sSNT- localhost:3000 
+and so, told me ok
+
+08:02.180 --> 08:07.510
+And now it should have written using the writable stream to output.txt
+
+08:07.510 --> 08:10.110
+So, we cat that out, oh, cool, we see our message
+
+08:10.110 --> 08:15.555
+super great, but, suppose our requirements change in this program
+
+08:15.555 -->
+so, maybe we have to make a directory
