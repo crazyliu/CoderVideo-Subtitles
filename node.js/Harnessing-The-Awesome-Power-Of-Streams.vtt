@@ -325,5 +325,32 @@ So, we cat that out, oh, cool, we see our message
 08:10.110 --> 08:15.555
 super great, but, suppose our requirements change in this program
 
-08:15.555 -->
-so, maybe we have to make a directory
+08:15.555 --> 08:19.560
+so, maybe we have to make a directory before we can actually
+put the data somewhere
+
+08:19.560 --> 08:24.595
+so, we have to call fs.mkdir with like a random id
+
+08:24.595 --> 08:29.645
+so, it will take this code to generate id and we'll
+put fs.mkdir on that
+
+08:29.645 --> 08:34.465
+ok, this seems we work through,right?
+
+08:34.465 --> 08:43.220
+woo, see, the same thing and instead of telling res.end('ok')
+we write res.end with the id
+
+08:43.220 --> 08:47.540
+so, it should tell us, oops, and I need to write the right file
+
+08:47.540 --> 08:51.075
+node 2.js, correct!
+
+08:51.075 --> 09:00.785
+ok, so node 2.js, ok, cool, so now gives this the id
+and it should be in data directory and output.txt file
+
+09:00.785 -->
