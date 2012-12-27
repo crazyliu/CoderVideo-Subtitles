@@ -471,5 +471,53 @@ and like smooch them together into a duplex stream
 duplex streams are sort of like the voltron of streams
 in that respect
 
-12:06.605 -->
+12:06.605 --> 12:13.360
+especially when you have a request and response object
+you can serve like plumb them together to make this
+duplex stream
 
+12:13.360 --> 12:22.665
+and that's really cool because you can take like other
+duplex stream and take the request and response pipe that
+to another stream and pipe that back to the duplex
+
+12:22.665 --> 12:25.600
+because duplex is awesome and like that
+
+12:25.600 --> 12:31.630
+it's... you'll see a lot of that. I actually skip this section
+
+12:31.630 --> 12:37.440
+so, another kind of through stream that I definitely definitely
+wanna talk about is called JSONStream
+
+12:37.440 --> 12:38.985
+JSONStream is really awesome
+
+12:38.985 --> 12:48.025
+so, suppose I have a 125Mb JSON file for all of the 
+property boundaries in San Francisco
+
+12:48.025 --> 12:53.455
+this file exists and it's awesome, I've rendered it 
+it took like three hours
+
+12:53.455 --> 13:02.040
+so, like, if we just straight up, if we just straight up
+like try to load this into the memory
+
+13:02.040 --> 13:05.230
+you'll gonna wait a long time
+
+13:05.230 --> 13:10.845
+that takes like several minutes, it's actually loaded
+
+13:10.845 --> 13:16.675
+but if we use the power of streams here with this module
+called JSONStream
+
+13:16.675 --> 13:18.790
+we can actually make some progress
+
+13:18.790 -->
+so, say going back to the streams
