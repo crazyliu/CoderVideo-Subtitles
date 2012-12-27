@@ -410,5 +410,66 @@ and we curl to it
 10:35.750 --> 10:40.660
 so, cat out this output, make sure ok, work that time
 
-10:40.660 -->
+10:40.660 --> 10:44.340
+so, you might notice this prints out the id
+
+10:44.340 --> 10:49.725
+so, we can actually cat data, do some like 
+Unix aggregator there output.txt
+
+10:49.725 --> 10:53.470
+ok, so now it's catting the file that is the outputs
+
+10:53.470 --> 10:57.840
+and now, as you can see, every single time,
+we get the correct output
+
+10:57.840 --> 11:01.715
+we just eliminate that risk condition where we get data with pause stream
+
+11:01.715 --> 11:03.755
+pause stream is great
+
+11:03.755 --> 11:11.650
+so, Oops, the next thing is duplex streams
+
+11:11.650 --> 11:14.355
+duplex streams are also readable writable stream
+
+11:14.355 --> 11:19.565
+but, duplex streams are really cool because they
+are like a telephone you know
+
+11:19.565 --> 11:22.705
+it's not just a filter like grep like through stream
+
+11:22.705 --> 11:24.470
+but it's like a sort of conversation
+
+11:24.470 --> 11:29.395
+you have site A talks to site B, but then site B needs
+like talk back to site A
+
+11:29.395 --> 11:33.170
+and sort of these circular ongoing communication
+
+11:33.170 --> 11:38.610
+if you see, a.pipe(b).pipe(a) or something like that
+
+11:38.610 --> 11:41.610
+you probably, you most definitely have a duplex stream
+
+11:41.610 --> 11:55.845
+so, and uh, there's sweet module called duplexer that was 
+actually taking out of the module called event-stream
+
+11:55.845 --> 12:02.545
+that let you take like readable stream and writable stream
+and like smooch them together into a duplex stream
+
+12:02.545 --> 12:06.605
+duplex streams are sort of like the voltron of streams
+in that respect
+
+12:06.605 -->
 
