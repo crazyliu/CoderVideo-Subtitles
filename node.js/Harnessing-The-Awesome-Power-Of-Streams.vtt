@@ -344,7 +344,7 @@ woo, see, the same thing and instead of telling res.end('ok')
 we write res.end with the id
 
 08:43.220 --> 08:47.540
-so, it should tell us, oops, and I need to write the right file
+so, it should tell us, Oops, and I need to write the right file
 
 08:47.540 --> 08:51.075
 node 2.js, correct!
@@ -353,4 +353,62 @@ node 2.js, correct!
 ok, so node 2.js, ok, cool, so now gives this the id
 and it should be in data directory and output.txt file
 
-09:00.785 -->
+09:00.785 --> 09:04.920
+Holy crappy, it's empty! what's going on here?
+
+09:04.920 --> 09:08.270
+Let's just try that again, maybe, maybe it works this time
+
+09:08.270 --> 09:17.240
+uh, ok, so, we can cat out that, ok, so that time works!
+that's a little weird.
+
+09:17.240 --> 09:21.720
+uh, it wasn't an accident. There is some risk condition in this code.
+
+09:21.720 --> 09:27.970
+we are calling fs.mkdir and then we are piping to a writable stream
+
+09:27.970 --> 09:35.510
+so, you know, you can get in the case where you know data events 
+have come in before our callback fires of the fs.mkdir
+
+09:35.510 --> 09:37.895
+how do we get around this? Pause stream of course
+
+09:37.895 --> 09:46.300
+If we alter a clutter a little bit, to do...
+
+09:46.300 --> 09:51.035
+alright, so, we required of course first, it's called pause-stream
+on NPM
+
+09:51.035 --> 09:53.450
+alright, and so, we make one and we'll pause it
+
+09:53.450 --> 09:59.460
+and then, instead of piping our request to the ws object
+
+09:59.460 --> 10:10.695
+we will pipe it..., ok, ps.pipe, let me just jump the last worked on
+
+10:10.695 --> 10:13.780
+ok, so we pipe a pause stream instead of the write stream
+
+10:13.780 --> 10:21.025
+and it's pausing and then, at the end, we call resume to resume it
+once the callback is actually fired
+
+10:21.025 --> 10:27.520
+not like eventually, you know, maybe some data is passed, maybe not
+now we actually resume it. pause stream will buffer the data for us
+
+10:27.520 --> 10:35.750
+so, if we take our existing example and run updated version 
+and we curl to it
+
+10:35.750 --> 10:40.660
+so, cat out this output, make sure ok, work that time
+
+10:40.660 -->
+
