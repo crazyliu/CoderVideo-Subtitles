@@ -519,5 +519,138 @@ called JSONStream
 13:16.675 --> 13:18.790
 we can actually make some progress
 
-13:18.790 -->
-so, say going back to the streams
+13:18.790 --> 13:24.230
+so, say going back to the streams, set the value we want to get
+
+13:24.230 --> 13:37.215
+is the coordinates data, that's inside of the features key, but
+that's inside of the geometry key
+
+13:37.215 --> 13:42.370
+but that's inside of the coordinates key, 
+the coordinates key is the thing we actually wanna use
+
+13:42.370 --> 13:50.675
+so, how do we do that, we use JSONStream and JSONStream.parse
+takes an array of sort like key/values 
+
+13:50.675 --> 13:53.375
+not just key/values, you can actually have like some patterns or anything
+
+13:53.375 --> 14:00.235
+so, "features" is actually an array, so, 
+if we've gonna every element, we can specify true instead of string name
+
+14:00.235 --> 14:03.755
+and we can lookup the geometry key, we can look up the coordinates key
+
+14:03.755 --> 14:11.860
+and we can just console.dir the values, and take a read stream
+and pipe that into the parser here
+
+14:11.860 --> 14:17.550
+and so , if I run that program, maybe I forget a step here
+
+14:17.550 --> 14:23.590
+oh, I am still in the pause-stream example, that's why 
+you guys should come on that
+
+14:23.590 --> 14:26.290
+ok, if I run this example, ok, sweet
+
+14:26.290 --> 14:37.405
+so, instead of just you know, fs.readFile('citylots.json'),
+we don't have to wait for that to load the whole damn thing into the memory
+
+14:37.405 --> 14:40.190
+we can just like start processing it, right away
+
+14:40.190 --> 14:44.910
+and what's really cool too is what we can is actually stream
+
+14:44.910 --> 14:51.340
+so, suppose we'll gonna make like some vast transformation that's
+gonna read an stream and like write back out to a file
+
+14:51.340 --> 14:58.715
+no problem, we can use JSONStream.stringify for that,
+that's exactly a kind of this part but streaming for JSON
+
+14:58.715 --> 15:04.090
+so, we can do stringify.pipe to a write stream, here coords.json
+
+15:04.090 --> 15:11.220
+and so, if I run this file, which is 9.js
+
+15:11.220 --> 15:20.050
+ok, it's just sitting there, that's because it's actually
+writing to this file corrds.json
+
+15:20.050 --> 15:25.060
+and if we munch that, it's actually growing continuouslly
+
+15:25.060 --> 15:29.255
+that's because our stream is letting it do that
+you know, we don't have to buffer the whole thing in the memory
+
+15:29.255 --> 15:32.285
+which is really really important if you're writing 
+scalable web services
+
+15:32.285 --> 15:35.105
+which if you're writing Node, that's worth you are really good at
+
+15:35.105 --> 15:41.890
+so, uh, yes, you use JSONStream parsers where possible
+
+15:41.890 --> 15:47.115
+so, the next crazy thing that I want to show you
+is called scuttlebutt
+
+15:47.115 --> 15:52.245
+scuttlebutt is ..., 
+ok, yes, DNode is another example of duplex stream
+
+15:52.245 --> 15:55.930
+which we'll get to a little bit with the craziness
+
+15:55.930 --> 16:03.060
+still to come, so, scuttlebutt is, the term comes to term
+not cool term for water cool basically
+
+16:03.060 --> 16:11.900
+so, scuttlebutt is a gossip protocol, that where you have 
+all of these nodes and network sort of like talk with each other
+
+16:11.900 --> 16:17.570
+and there's not like canonical source of data,
+they sort of just pass messages around
+
+16:17.570 --> 16:24.130
+in order to have an entire state and it's eventually 
+consistent, which is awesome, it's history based algorithm
+
+16:24.130 --> 16:31.506
+it's crazy awesome, so, to use scuttlebutt
+
+16:31.506 --> 16:38.305
+here I am just using the scuttlebutt model and if you like more
+practical example, you can actually checkout this module called crdt
+
+16:38.305 --> 16:43.470
+but, so, scuttlebutt models, you can just create some streams
+for each of them
+
+16:43.470 --> 16:50.981
+and, like set a value here, set a value on node A
+pipe that to node B
+
+16:50.981 --> 17:01.185
+if we run this, cool, so, we actually got the event on node B
+even though we set the value on node A
+
+17:01.185 --> 17:04.835
+and we are just piping here, so we can actually do that 
+over network connection
+
+17:04.835 -->
