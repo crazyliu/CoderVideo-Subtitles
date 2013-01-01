@@ -653,4 +653,109 @@ even though we set the value on node A
 and we are just piping here, so we can actually do that 
 over network connection
 
-17:04.835 -->
+17:04.835 --> 17:11.795
+so, here I create a http server, and we'll just do similar thing
+where we sort of have keys and values
+
+17:11.795 --> 17:20.035
+and this part is really cool, so if we ...
+the first argument is port number 
+
+17:20.035 --> 17:27.550
+so we listen on port 8000 and we can curl to this
+
+17:27.550 --> 17:31.325
+so, that's getting key a, but I can set it for printing equals
+
+17:31.325 --> 17:35.410
+now, I get key a, it's 5, that's neat and I can do that
+as much as I want
+
+17:35.410 --> 17:44.400
+but if I spin up another server on port 8001 and
+connect that with scuttlebutt to port 8000
+
+17:44.400 --> 17:50.455
+now I can curl localhost:8001 key a, that's the same
+and I can actually set it to new value
+
+17:50.455 --> 17:54.855
+and get it on port 8000 and that value is proper got
+
+17:54.855 --> 17:59.605
+but it's cooler, because we can actually connect,
+it's not just like a client-server thing
+
+17:59.605 --> 18:10.010
+we can actually connect ..., here I'll spin up a new server
+on port 8002, but I only connect it to ... port 8002 to port 8001
+
+18:10.010 --> 18:19.755
+and if I turn to get ..., if I turn to set a value on 8002
+
+18:19.755 --> 18:24.365
+and then I get it on 8000, it should be the same value
+and it is!
+
+18:24.365 --> 18:33.940
+this is because ... so, the server on 8002 is not directly 
+connected to 8000, it's only connected through the server 8001
+
+18:33.940 --> 18:40.705
+so, basically, if you have connectedness in your graph of streams
+that where everything is piped together
+
+18:40.705 --> 18:43.605
+the whole state of the entire network be eventually consistent
+
+18:43.605 --> 18:46.020
+you can just set values and get them elsewhere
+
+18:46.020 --> 18:51.865
+and you don't have to worry about like caving client and server
+and how to caving a cluster of database peered to each other 
+
+18:51.865 --> 18:58.740
+which, I'll totally rush to next part is ... skipping that
+
+18:58.740 --> 19:02.690
+this craziness
+
+19:02.690 --> 19:06.865
+so, don't worry, I'll go very fast and it'll be so awesome
+
+19:06.865 --> 19:13.910
+so, let's build a streaming web app that synchronizes state
+across all users
+
+19:13.910 --> 19:16.105
+listens for server events, has an rpc control interface
+
+19:16.105 --> 19:19.515
+runs multiple streams over mux-demux, in node and the browser
+
+19:19.515 --> 19:24.840
+and load balanced across multiple web servers that
+peering with each other over scuttlebutt which is 
+gossip protocol
+
+19:24.840 --> 19:28.105
+ok, that sounds awesome, let's do it
+
+19:28.105 --> 19:32.210
+so, the first thing we need to do is well, we'll create a scuttlebutt
+model and we'll create a web server
+
+19:32.210 --> 19:35.940
+and here the web server just listens on the port
+
+19:35.940 --> 19:41.265
+well, what happened, it was gonna too fast, that's crazy
+
+19:41.265 --> 19:46.760
+ok, so, we create a web server, we'll create a stream
+
+19:46.760 -->
+and then 
+
+
