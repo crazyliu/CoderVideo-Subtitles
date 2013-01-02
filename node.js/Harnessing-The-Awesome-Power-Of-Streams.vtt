@@ -755,7 +755,238 @@ well, what happened, it was gonna too fast, that's crazy
 19:41.265 --> 19:46.760
 ok, so, we create a web server, we'll create a stream
 
-19:46.760 -->
-and then 
+19:46.760 --> 19:50.785
+and then, we can just add a thing here
+
+19:50.785 --> 19:56.010
+so, if you are familiar with couchdb, it has sweet
+replicate api but what we can succeed about it is
+
+19:56.010 --> 20:00.490
+you can only ... it's lot of only ... it's fully like 
+servers connecting clients
+
+20:00.490 --> 20:07.005
+but, with this, anybody can connect to our server, replicate
+and not only replicate from us but replicate to us
+
+20:07.005 --> 20:13.055
+and that information will be passed around our entire network
+over streams, it would be, it's gonna be really awesome
+
+20:13.055 --> 20:23.895
+ok, so, some other thing, we'll use this module I wrote called
+emit-stream to turn a event emitter into a stream and back
+into an event emitter again
+
+20:23.895 --> 20:31.085
+so, we can use other crazy awesome module called mux-demux
+which is mentioned earlier today, which is awesome
+
+20:31.085 --> 20:37.305
+and that let us take multiple streams, pack them into a single stream
+and I have a picture of this
+
+20:37.305 --> 20:43.520
+well, that's emit-stream, oh, where is my picture, it was awesome
+anyway, it doesn't matter
+
+20:43.520 --> 20:50.810
+so, we have a mux-demux and that just like is a crazy video thing
+
+20:50.810 --> 20:56.790
+so, whatever mux-demux, we'll create a stream called state
+that's for our synchronization
+
+20:56.790 --> 21:00.375
+and we can create another stream called events
+that's for our event system
+
+21:00.375 --> 21:05.770
+which will turn an event emitter into a stream
+back to an event emitter on the other side and  vice versa
+
+21:05.770 --> 21:12.815
+ok, cool, so, the other thing we can do is actually emit events
+
+21:12.815 --> 21:19,615
+and we can emit like a part event also when the request ends
+it's a kind cool
+
+21:19,615 --> 21:21.805
+so, this part is really freaking awesome
+
+21:21.805 --> 21:26.080
+so, we have this, you know that slices string that I show you
+
+21:26.080 --> 21:32.940
+so, now , for every additional argument passed the initial 
+argument that I give which is the port number 
+
+21:32.940 --> 21:37.800
+it'll connect and replicate with in a period of fashion
+every other web server 
+
+21:37.800 --> 21:40.315
+so, we can just tight multiple web servers, they all talk to 
+each other
+
+21:40.315 --> 21:46.555
+they all use gossip protocol to communicate, 
+all of the state across all of the network are eventually consistent
+
+21:46.555 --> 21:50.850
+and we can plug this directly into browsers also,
+which is the next part
+
+21:50.850 --> 21:55.830
+so, after some login staff, yeah, here is our web server
+
+21:55.830 --> 22:06.090
+and, yes, we can use shoe, which is a module that I wrote
+all it is is really thin wrapper on top of sockjs that give you a stream
+
+22:06.090 --> 22:13.855
+that's all it does. that's amazing, you don't have to have
+like weird thing, you can just use modules, let's do that
+
+22:13.855 --> 22:22.250
+so, we have our stream right, and all we need to do to replicate
+is stream.pipe(createStream()).pipe(stream)
+
+22:22.250 --> 22:29.445
+and that's the mux-demux connection， it's exactly the same as
+our http streaming connection to replicate the states
+
+22:29.445 --> 22:36.385
+so, we wrote a function, it'll turn a string, we can use that
+anywhere to replicate anywhere browsers, servers like other servers
+
+22:36.385 --> 22:40.060
+it doesn't matter, we just send data and the network figures it out
+
+22:40.060 --> 22:44.955
+so, there's some plumbing in here too
+
+22:44.955 --> 22:50.545
+I snuck dnode into this example also because just why not
+
+22:50.545 --> 22:54.465
+here I have a function that I just defined and you know, 
+it's dnode 
+
+22:54.465 --> 23:01.275
+so, and with mux-demux, all I have to do is create an additional
+stream, and just like pipe it through
+
+23:01.275 --> 23:08.125
+and that's all, so, to recapitulate a little bit
+
+23:08.125 --> 23:10.535
+we have dnode stream, we've got mux-demux
+
+23:10.535 --> 23:14.095
+here's our browser code actually to render this
+
+23:14.095 --> 23:21.125
+so, it draws a big blue box and what's really cool is
+we are using actually exactly the same modules
+
+23:21.125 --> 23:25.545
+we won't actually know except for maybe there is document.body,
+this is actually browser code
+
+23:25.545 --> 23:28.710
+cuz we're using scuttlebutt, we're using mux-demux
+
+23:28.710 --> 23:31.725
+it's all just browser fights up, we're using emit-stream
+just the same
+
+23:31.725 --> 23:35.040
+it's pretty much the same code except it has dom staff in it
+
+23:35.040 --> 23:41.645
+so, we'll go through all of this, we just recap here a little bit
+and I'll actually run it and it'll be done
+
+23:41.645 --> 23:46.980
+so, we synchronize state across all uses, we listen for server events
+with the emit-stream
+
+23:46.980 --> 23:51.465
+we run multiple streams over mux-demux, we load balanced across
+multiple servers
+
+23:51.465 --> 23:55.430
+so, I am telling you I haven't actually demonstrate this yet
+
+23:55.430 --> 24:02.460
+in order a browser, we have an rpc control interface with dnode
+so that's the all the things
+
+24:02.460 --> 24:07.625
+so, let's actually run this beast
+
+24:07.625 --> 24:16.010
+so, the first thing I'll do is I'll browserify the last version
+that wasn't any good
+
+24:16.010 --> 24:28.090
+so, staticbundle.js cuz I think I was messing with that earlier
+and I'll run the server on port 8000
+
+24:28.090 --> 24:34.380
+cool, and I can visit it, HOLA LISBOA, that's from dnode actually
+
+24:34.380 --> 24:39.395
+and here we just have a box, the box, it's not very fancy
+
+24:39.395 --> 24:41.720
+all you can do is drag it, right?
+
+24:41.720 --> 24:50.865
+but, if we have another user connected, and if I make it
+smaller again
+
+24:50.865 --> 24:56.050
+goodness, ok, so if I move the box over here, cool
+if I move it there from over here
+
+24:56.050 --> 24:59.570
+you might have seen something like socket.io, and that's great
+that's reusable
+
+24:59.570 --> 25:02.115
+but, that's not intereasting enough
+
+25:02.115 --> 25:06.520
+let's actually have a load balanced server
+
+25:06.520 --> 25:16.785
+so, we'll run another server on port 8001 and connect it to other
+server on 8002, connected over stream and over everything
+
+25:16.785 --> 25:23.720
+so, oh, godness, it's a little bugness, oh no, damn it
+work damn it
+
+25:23.720 --> 25:33.640
+I am telling you this totally worked earlier, sort of 
+oh, there it goes, yes, it totally is working kind of a little bit
+
+25:33.640 --> 25:34.965
+it's bug there but like, that's the basic idea
+
+25:34.965 --> 25:44.765
+that is all that I have to say, we'll skip some pictures,
+use all of these modules, they are amazing
+
+25:44.765 --> 25:55.730
+thanks!
+
+
+
+
 
 
