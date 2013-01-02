@@ -1,0 +1,992 @@
+WEBVTT
+
+00:00.001 --> 00:03.075
+So, I am just gonna look at my screen
+
+00:03.075 --> 00:08.340
+Anyways, so, I am here to talk about harnessing the awesome power of streems
+
+00:08.340 --> 00:12.790
+uh, streams are I think the most underused part of Node
+
+00:12.790 --> 00:17.325
+and they are what makes Node and JavaScript in general really really amazing
+
+00:17.325 --> 00:22.095
+So, back in the sixties, uh, sort of this recurring trope
+
+00:22.095 --> 00:23.885
+No, I can't, shut up!
+
+00:23.885 --> 00:31.555
+So, back in the sixties, this, this guy, Doug..., actual "I" can't make vigor
+
+00:31.555 --> 00:34.490
+this guy, Doug McIlroy
+
+00:34.490 --> 00:42.030
+uh, was like kind of , uh, like, put his folder on the ground, 
+whatever that is and said:
+
+00:42.030 --> 00:46.420
+No, Unix is gonna have Streams and I am gonna fucking quit if doesn't
+
+00:46.420 --> 00:49.985
+And that's awesome, so, we have Streams now, because of this crazy guy
+
+00:49.985 --> 00:55.455
+uh, but basicly Streams let you treat programs as just little pieces
+
+00:55.455 --> 00:58.830
+little pieces like garden hoses that you can just plumb together
+
+00:58.830 --> 01:01.915
+I think plumbing metaphor a really apt for lot of this staff
+
+01:01.915 --> 01:04.435
+So, the first kind of Streams that we have is readable Stream
+
+01:04.435 --> 01:08.980
+And so, readable Streams are just event vendors that made a data event and an end event
+
+01:08.980 --> 01:10.645
+Maybe some other one, those aren't important
+
+01:10.645 --> 01:17.120
+uh, so, we can write a readable stream here
+
+01:17.120 --> 01:19.525
+vi start.js(explain: It seams like opening a file with vi editor)
+
+01:19.525 --> 01:23.290
+Ok, so, first thing you do, uh, you've probably seen this before
+
+01:23.290 --> 01:29.155
+uh, we fs.createReadStream and we can just like 
+here I've got dictionary of like hundred thousand words
+
+01:29.155 --> 01:35.120
+uh, and I can just pipe this just like in Unix was pipe stderr to stdout
+
+01:35.120 --> 01:42.770
+And if I run this, uh, cool, so I get light all of the words printed just on stdout
+
+01:42.770 --> 01:50.715
+What's really cool about Streams is you don't you know buffer the whole thing
+into memory first. You just can incrementally output every single piece
+
+01:50.715 --> 01:56.310
+uh, in the stream and that's really cool because you get results like immediately
+
+01:56.310 --> 02:05.285
+And, Let you write a lot of really interesting abstractions in the some other things
+like {end: false} if you don't want stream to give up writing to stdout you do that about
+
+02:05.285 --> 02:11.145
+uh, so, to write a stream like without just using a stream, it's a little bit more complicated
+
+02:11.145 --> 02:16.210
+uh, the first you do for readable stream, and these little changes,
+so don't worry about memorizing all this.
+
+02:16.210 --> 02:19.780
+The first thing you do is you set readable to true, the attribute
+
+02:19.780 --> 02:25.646
+uh, it's all here. I've got just this example, it just emits the data event
+and (the data) just has counter
+
+02:25.646 --> 02:30.950
+So, if you run that, ah, ah, ah, 5.js
+
+02:30.950 --> 02:35.560
+Cool, so in the very bottom down there, you can see this infinite string of digits
+
+02:35.560 --> 02:38.520
+It's getting faster and faster, cuz, there are more digits and real numbers
+
+02:38.520 --> 02:49.370
+But, uh, if we want to say end that after uh, after two seconds, 
+we can just emit an end event.
+
+02:49.370 --> 02:52.290
+So, one, two and it's done!
+
+02:52.290 --> 03:00.385
+Cool, so, what's really cool I mean besides the fact 
+we can just pipe things around, uh.
+
+03:00.385 --> 03:04.960
+We can actually also create writable stream since scratch
+
+03:04.960 --> 03:11.155
+So, like you probably, my hopefully, have seen this 
+in Node if you used Node a lot
+
+03:11.155 --> 03:14.760
+fs.createWriteStream, it's awesome, because
+
+03:14.760 --> 03:18.250
+all you have to do is just write data to it
+
+03:18.250 --> 03:27.595
+and it has been in a file, so you don't have to like
+have a big stream or big buffer like concat all these 
+messages one by one on to some growing thing
+
+03:27.595 --> 03:35.185
+You can just, uh, well, so I run this program and I 
+cat output.txt
+
+03:35.185 --> 03:39.235
+oh, cool, I have the same output as in my file
+
+03:39.235 --> 03:48.125
+uh, so another cool thing you can do is you can take 
+readable streams like process.stdin as a standard readable streams
+and pipe them to your writable stream
+
+03:48.125 --> 03:50.720
+So, if I run this program which is 2(.js)
+
+03:50.720 --> 03:58.840
+then , abc, def, and we'll cat output.txt
+and see that it's exactly what we typed,
+so that's as we might expect
+
+03:58.840 --> 04:04.330
+So, creating these writable streams since scratch
+is a bit more complicated
+
+04:04.330 --> 04:06.145
+so, the first thing we do is set writable to true
+
+04:06.145 --> 04:12.665
+this is used by pipe internally to make it, 
+so that we can process.stdin.pipe to writable stream
+
+04:12.665 --> 04:17.810
+So we said a writable stream and we set an end function
+and of course you have to be a little more careful in Node
+
+04:17.810 --> 04:20.985
+cuz, it is just of convention, or you can call 
+.end with an object
+
+04:20.985 --> 04:27.550
+And that we'll call .write, so that's just one thing
+to be a little careful of
+
+04:27.550 --> 04:31.025
+But if you use some libraries that problem goes away
+
+04:31.025 --> 04:42.410
+So, if we run this program, we can do a similar kind
+of thing and here it's just log in all of the values 
+that I am typing
+
+04:42.410 --> 04:47.520
+uh, if I end this stream, I get a handy little end message
+that accesses a mention point
+
+04:47.520 --> 04:52.690
+Triple cool! So, we can actually do something useful here
+this custom writable stream.
+
+04:52.690 --> 04:57.480
+How about let's just count all the bytes and when the stream
+ends, we just print that out to stdout
+
+04:57.480 --> 05:06.045
+So here write, you now have byte equal zero and call sequals 
+the buf.length ever time, at the end, I print byte count message
+
+05:06.045 --> 05:16.080
+So, if I run this program, abc, def, and now I end it,
+and byte counts 8 which make sense because three and a new line is 4,
+and 4 is 8, cool!
+
+05:16.080 --> 05:18.885
+So, that's writable stream.
+
+05:18.885 --> 05:23.360
+The next thing that I think is super important, to be realized is
+
+05:23.360 --> 05:30.245
+this is an idea(a concept) I treat from Domnita who will be a 
+recurring theme draft the sock
+
+05:30.245 --> 05:34.720
+It's called the through stream, so through stream is a readable 
+wirtable stream
+
+05:34.720 --> 05:40.005
+It's not the only kind of the readable writable stream, but it does
+as a readable writable stream that acts like a filter
+
+05:40.005 --> 05:46.785
+So, for instance, the grep program in Unix, you know,
+takes stdin and does some things and write stdout
+
+05:46.785 --> 05:48.845
+it's like from here to there
+
+05:48.845 --> 05:55.645
+So, we can make on these. If we create a new stream and we set
+both readable readable and writable to true
+
+05:55.645 --> 05:57.585
+Combining the previous two examples
+
+05:57.585 --> 06:00.885
+we can have a write stream but we can also emit data
+
+06:00.885 --> 06:06.790
+and this is really cool, so, right here, I am uh just 
+uppercasing the input that I get to make a loud stream 
+
+06:06.790 --> 06:10.925
+It'll be very loud for us, I did the same thing with the end
+
+06:10.925 --> 06:17.910
+And I'll pipe stdin to my ts, which should actually
+be called loud stream, like ls
+
+06:17.910 --> 06:24.650
+So, that is 3.js, abc, hello lisboa and now end it
+
+06:24.650 --> 06:27.805
+Oh, no, alright, I forgot to pipe that
+
+06:27.805 --> 06:33.920
+right, before, I had this, so, actually, I have to
+pipe the output somewhere for one to use it
+
+06:33.920 --> 06:43.045
+So I got 4.js and I'll say: beep boop and end it
+and we get uppercase messages
+
+06:43.045 --> 06:46.425
+Great, indeed, this is the through stream
+
+06:46.425 --> 06:49.815
+Alright, and this was writable stream and this is through stream
+
+06:49.815 --> 06:52.441
+This is a kind of picture I drew to illustrate what's going on
+
+06:52.441 --> 06:57.485
+So you have a function in the middle and you have thought these
+two little convertible machines that do the things
+
+06:57.485 --> 07:02.380
+The next kind of thing that I think is important to talk about
+is: pause stream 
+
+07:02.380 --> 07:05.540
+Pause stream is a sort of through stream
+
+07:05.540 --> 07:12.885
+well, in Node, there is a mechanism in pipe internally that 
+helps you handle back nature
+
+07:12.885 --> 07:21.680
+You call .pause and resume when you want to start it again
+a sort of like barrier a few green water and then you turn on 
+the tap to get new something
+
+07:21.680 --> 07:25.525
+Plumbing plumbing metaphors there if useful
+
+07:25.525 --> 07:28.855
+So, I have an example for a pause stream
+
+07:28.855 --> 07:30.155
+Here we can look at it
+
+07:30.155 --> 07:41.645
+So, this is an http server that creates this output.txt file
+with all of the content that we put out here
+
+07:41.645 --> 07:46.740
+So, I am gonna echo beep boop and I'll curl that and finally
+run this program
+
+07:46.740 --> 08:02.180
+So, node 0.js and this program I'll curl -sSNT- localhost:3000 
+and so, told me ok
+
+08:02.180 --> 08:07.510
+And now it should have written using the writable stream to output.txt
+
+08:07.510 --> 08:10.110
+So, we cat that out, oh, cool, we see our message
+
+08:10.110 --> 08:15.555
+super great, but, suppose our requirements change in this program
+
+08:15.555 --> 08:19.560
+so, maybe we have to make a directory before we can actually
+put the data somewhere
+
+08:19.560 --> 08:24.595
+so, we have to call fs.mkdir with like a random id
+
+08:24.595 --> 08:29.645
+so, it will take this code to generate id and we'll
+put fs.mkdir on that
+
+08:29.645 --> 08:34.465
+ok, this seems we work through,right?
+
+08:34.465 --> 08:43.220
+woo, see, the same thing and instead of telling res.end('ok')
+we write res.end with the id
+
+08:43.220 --> 08:47.540
+so, it should tell us, Oops, and I need to write the right file
+
+08:47.540 --> 08:51.075
+node 2.js, correct!
+
+08:51.075 --> 09:00.785
+ok, so node 2.js, ok, cool, so now gives this the id
+and it should be in data directory and output.txt file
+
+09:00.785 --> 09:04.920
+Holy crappy, it's empty! what's going on here?
+
+09:04.920 --> 09:08.270
+Let's just try that again, maybe, maybe it works this time
+
+09:08.270 --> 09:17.240
+uh, ok, so, we can cat out that, ok, so that time works!
+that's a little weird.
+
+09:17.240 --> 09:21.720
+uh, it wasn't an accident. There is some risk condition in this code.
+
+09:21.720 --> 09:27.970
+we are calling fs.mkdir and then we are piping to a writable stream
+
+09:27.970 --> 09:35.510
+so, you know, you can get in the case where you know data events 
+have come in before our callback fires of the fs.mkdir
+
+09:35.510 --> 09:37.895
+how do we get around this? Pause stream of course
+
+09:37.895 --> 09:46.300
+If we alter a clutter a little bit, to do...
+
+09:46.300 --> 09:51.035
+alright, so, we required of course first, it's called pause-stream
+on NPM
+
+09:51.035 --> 09:53.450
+alright, and so, we make one and we'll pause it
+
+09:53.450 --> 09:59.460
+and then, instead of piping our request to the ws object
+
+09:59.460 --> 10:10.695
+we will pipe it..., ok, ps.pipe, let me just jump the last worked on
+
+10:10.695 --> 10:13.780
+ok, so we pipe a pause stream instead of the write stream
+
+10:13.780 --> 10:21.025
+and it's pausing and then, at the end, we call resume to resume it
+once the callback is actually fired
+
+10:21.025 --> 10:27.520
+not like eventually, you know, maybe some data is passed, maybe not
+now we actually resume it. pause stream will buffer the data for us
+
+10:27.520 --> 10:35.750
+so, if we take our existing example and run updated version 
+and we curl to it
+
+10:35.750 --> 10:40.660
+so, cat out this output, make sure ok, work that time
+
+10:40.660 --> 10:44.340
+so, you might notice this prints out the id
+
+10:44.340 --> 10:49.725
+so, we can actually cat data, do some like 
+Unix aggregator there output.txt
+
+10:49.725 --> 10:53.470
+ok, so now it's catting the file that is the outputs
+
+10:53.470 --> 10:57.840
+and now, as you can see, every single time,
+we get the correct output
+
+10:57.840 --> 11:01.715
+we just eliminate that risk condition where we get data with pause stream
+
+11:01.715 --> 11:03.755
+pause stream is great
+
+11:03.755 --> 11:11.650
+so, Oops, the next thing is duplex streams
+
+11:11.650 --> 11:14.355
+duplex streams are also readable writable stream
+
+11:14.355 --> 11:19.565
+but, duplex streams are really cool because they
+are like a telephone you know
+
+11:19.565 --> 11:22.705
+it's not just a filter like grep like through stream
+
+11:22.705 --> 11:24.470
+but it's like a sort of conversation
+
+11:24.470 --> 11:29.395
+you have site A talks to site B, but then site B needs
+like talk back to site A
+
+11:29.395 --> 11:33.170
+and sort of these circular ongoing communication
+
+11:33.170 --> 11:38.610
+if you see, a.pipe(b).pipe(a) or something like that
+
+11:38.610 --> 11:41.610
+you probably, you most definitely have a duplex stream
+
+11:41.610 --> 11:55.845
+so, and uh, there's sweet module called duplexer that was 
+actually taking out of the module called event-stream
+
+11:55.845 --> 12:02.545
+that let you take like readable stream and writable stream
+and like smooch them together into a duplex stream
+
+12:02.545 --> 12:06.605
+duplex streams are sort of like the voltron of streams
+in that respect
+
+12:06.605 --> 12:13.360
+especially when you have a request and response object
+you can serve like plumb them together to make this
+duplex stream
+
+12:13.360 --> 12:22.665
+and that's really cool because you can take like other
+duplex stream and take the request and response pipe that
+to another stream and pipe that back to the duplex
+
+12:22.665 --> 12:25.600
+because duplex is awesome and like that
+
+12:25.600 --> 12:31.630
+it's... you'll see a lot of that. I actually skip this section
+
+12:31.630 --> 12:37.440
+so, another kind of through stream that I definitely definitely
+wanna talk about is called JSONStream
+
+12:37.440 --> 12:38.985
+JSONStream is really awesome
+
+12:38.985 --> 12:48.025
+so, suppose I have a 125Mb JSON file for all of the 
+property boundaries in San Francisco
+
+12:48.025 --> 12:53.455
+this file exists and it's awesome, I've rendered it 
+it took like three hours
+
+12:53.455 --> 13:02.040
+so, like, if we just straight up, if we just straight up
+like try to load this into the memory
+
+13:02.040 --> 13:05.230
+you'll gonna wait a long time
+
+13:05.230 --> 13:10.845
+that takes like several minutes, it's actually loaded
+
+13:10.845 --> 13:16.675
+but if we use the power of streams here with this module
+called JSONStream
+
+13:16.675 --> 13:18.790
+we can actually make some progress
+
+13:18.790 --> 13:24.230
+so, say going back to the streams, set the value we want to get
+
+13:24.230 --> 13:37.215
+is the coordinates data, that's inside of the features key, but
+that's inside of the geometry key
+
+13:37.215 --> 13:42.370
+but that's inside of the coordinates key, 
+the coordinates key is the thing we actually wanna use
+
+13:42.370 --> 13:50.675
+so, how do we do that, we use JSONStream and JSONStream.parse
+takes an array of sort like key/values 
+
+13:50.675 --> 13:53.375
+not just key/values, you can actually have like some patterns or anything
+
+13:53.375 --> 14:00.235
+so, "features" is actually an array, so, 
+if we've gonna every element, we can specify true instead of string name
+
+14:00.235 --> 14:03.755
+and we can lookup the geometry key, we can look up the coordinates key
+
+14:03.755 --> 14:11.860
+and we can just console.dir the values, and take a read stream
+and pipe that into the parser here
+
+14:11.860 --> 14:17.550
+and so , if I run that program, maybe I forget a step here
+
+14:17.550 --> 14:23.590
+oh, I am still in the pause-stream example, that's why 
+you guys should come on that
+
+14:23.590 --> 14:26.290
+ok, if I run this example, ok, sweet
+
+14:26.290 --> 14:37.405
+so, instead of just you know, fs.readFile('citylots.json'),
+we don't have to wait for that to load the whole damn thing into the memory
+
+14:37.405 --> 14:40.190
+we can just like start processing it, right away
+
+14:40.190 --> 14:44.910
+and what's really cool too is what we can is actually stream
+
+14:44.910 --> 14:51.340
+so, suppose we'll gonna make like some vast transformation that's
+gonna read an stream and like write back out to a file
+
+14:51.340 --> 14:58.715
+no problem, we can use JSONStream.stringify for that,
+that's exactly a kind of this part but streaming for JSON
+
+14:58.715 --> 15:04.090
+so, we can do stringify.pipe to a write stream, here coords.json
+
+15:04.090 --> 15:11.220
+and so, if I run this file, which is 9.js
+
+15:11.220 --> 15:20.050
+ok, it's just sitting there, that's because it's actually
+writing to this file corrds.json
+
+15:20.050 --> 15:25.060
+and if we munch that, it's actually growing continuouslly
+
+15:25.060 --> 15:29.255
+that's because our stream is letting it do that
+you know, we don't have to buffer the whole thing in the memory
+
+15:29.255 --> 15:32.285
+which is really really important if you're writing 
+scalable web services
+
+15:32.285 --> 15:35.105
+which if you're writing Node, that's worth you are really good at
+
+15:35.105 --> 15:41.890
+so, uh, yes, you use JSONStream parsers where possible
+
+15:41.890 --> 15:47.115
+so, the next crazy thing that I want to show you
+is called scuttlebutt
+
+15:47.115 --> 15:52.245
+scuttlebutt is ..., 
+ok, yes, DNode is another example of duplex stream
+
+15:52.245 --> 15:55.930
+which we'll get to a little bit with the craziness
+
+15:55.930 --> 16:03.060
+still to come, so, scuttlebutt is, the term comes to term
+not cool term for water cool basically
+
+16:03.060 --> 16:11.900
+so, scuttlebutt is a gossip protocol, that where you have 
+all of these nodes and network sort of like talk with each other
+
+16:11.900 --> 16:17.570
+and there's not like canonical source of data,
+they sort of just pass messages around
+
+16:17.570 --> 16:24.130
+in order to have an entire state and it's eventually 
+consistent, which is awesome, it's history based algorithm
+
+16:24.130 --> 16:31.506
+it's crazy awesome, so, to use scuttlebutt
+
+16:31.506 --> 16:38.305
+here I am just using the scuttlebutt model and if you like more
+practical example, you can actually checkout this module called crdt
+
+16:38.305 --> 16:43.470
+but, so, scuttlebutt models, you can just create some streams
+for each of them
+
+16:43.470 --> 16:50.981
+and, like set a value here, set a value on node A
+pipe that to node B
+
+16:50.981 --> 17:01.185
+if we run this, cool, so, we actually got the event on node B
+even though we set the value on node A
+
+17:01.185 --> 17:04.835
+and we are just piping here, so we can actually do that 
+over network connection
+
+17:04.835 --> 17:11.795
+so, here I create a http server, and we'll just do similar thing
+where we sort of have keys and values
+
+17:11.795 --> 17:20.035
+and this part is really cool, so if we ...
+the first argument is port number 
+
+17:20.035 --> 17:27.550
+so we listen on port 8000 and we can curl to this
+
+17:27.550 --> 17:31.325
+so, that's getting key a, but I can set it for printing equals
+
+17:31.325 --> 17:35.410
+now, I get key a, it's 5, that's neat and I can do that
+as much as I want
+
+17:35.410 --> 17:44.400
+but if I spin up another server on port 8001 and
+connect that with scuttlebutt to port 8000
+
+17:44.400 --> 17:50.455
+now I can curl localhost:8001 key a, that's the same
+and I can actually set it to new value
+
+17:50.455 --> 17:54.855
+and get it on port 8000 and that value is proper got
+
+17:54.855 --> 17:59.605
+but it's cooler, because we can actually connect,
+it's not just like a client-server thing
+
+17:59.605 --> 18:10.010
+we can actually connect ..., here I'll spin up a new server
+on port 8002, but I only connect it to ... port 8002 to port 8001
+
+18:10.010 --> 18:19.755
+and if I turn to get ..., if I turn to set a value on 8002
+
+18:19.755 --> 18:24.365
+and then I get it on 8000, it should be the same value
+and it is!
+
+18:24.365 --> 18:33.940
+this is because ... so, the server on 8002 is not directly 
+connected to 8000, it's only connected through the server 8001
+
+18:33.940 --> 18:40.705
+so, basically, if you have connectedness in your graph of streams
+that where everything is piped together
+
+18:40.705 --> 18:43.605
+the whole state of the entire network be eventually consistent
+
+18:43.605 --> 18:46.020
+you can just set values and get them elsewhere
+
+18:46.020 --> 18:51.865
+and you don't have to worry about like caving client and server
+and how to caving a cluster of database peered to each other 
+
+18:51.865 --> 18:58.740
+which, I'll totally rush to next part is ... skipping that
+
+18:58.740 --> 19:02.690
+this craziness
+
+19:02.690 --> 19:06.865
+so, don't worry, I'll go very fast and it'll be so awesome
+
+19:06.865 --> 19:13.910
+so, let's build a streaming web app that synchronizes state
+across all users
+
+19:13.910 --> 19:16.105
+listens for server events, has an rpc control interface
+
+19:16.105 --> 19:19.515
+runs multiple streams over mux-demux, in node and the browser
+
+19:19.515 --> 19:24.840
+and load balanced across multiple web servers that
+peering with each other over scuttlebutt which is 
+gossip protocol
+
+19:24.840 --> 19:28.105
+ok, that sounds awesome, let's do it
+
+19:28.105 --> 19:32.210
+so, the first thing we need to do is well, we'll create a scuttlebutt
+model and we'll create a web server
+
+19:32.210 --> 19:35.940
+and here the web server just listens on the port
+
+19:35.940 --> 19:41.265
+well, what happened, it was gonna too fast, that's crazy
+
+19:41.265 --> 19:46.760
+ok, so, we create a web server, we'll create a stream
+
+19:46.760 --> 19:50.785
+and then, we can just add a thing here
+
+19:50.785 --> 19:56.010
+so, if you are familiar with couchdb, it has sweet
+replicate api but what we can succeed about it is
+
+19:56.010 --> 20:00.490
+you can only ... it's lot of only ... it's fully like 
+servers connecting clients
+
+20:00.490 --> 20:07.005
+but, with this, anybody can connect to our server, replicate
+and not only replicate from us but replicate to us
+
+20:07.005 --> 20:13.055
+and that information will be passed around our entire network
+over streams, it would be, it's gonna be really awesome
+
+20:13.055 --> 20:23.895
+ok, so, some other thing, we'll use this module I wrote called
+emit-stream to turn a event emitter into a stream and back
+into an event emitter again
+
+20:23.895 --> 20:31.085
+so, we can use other crazy awesome module called mux-demux
+which is mentioned earlier today, which is awesome
+
+20:31.085 --> 20:37.305
+and that let us take multiple streams, pack them into a single stream
+and I have a picture of this
+
+20:37.305 --> 20:43.520
+well, that's emit-stream, oh, where is my picture, it was awesome
+anyway, it doesn't matter
+
+20:43.520 --> 20:50.810
+so, we have a mux-demux and that just like is a crazy video thing
+
+20:50.810 --> 20:56.790
+so, whatever mux-demux, we'll create a stream called state
+that's for our synchronization
+
+20:56.790 --> 21:00.375
+and we can create another stream called events
+that's for our event system
+
+21:00.375 --> 21:05.770
+which will turn an event emitter into a stream
+back to an event emitter on the other side and  vice versa
+
+21:05.770 --> 21:12.815
+ok, cool, so, the other thing we can do is actually emit events
+
+21:12.815 --> 21:19,615
+and we can emit like a part event also when the request ends
+it's a kind cool
+
+21:19,615 --> 21:21.805
+so, this part is really freaking awesome
+
+21:21.805 --> 21:26.080
+so, we have this, you know that slices string that I show you
+
+21:26.080 --> 21:32.940
+so, now , for every additional argument passed the initial 
+argument that I give which is the port number 
+
+21:32.940 --> 21:37.800
+it'll connect and replicate with in a period of fashion
+every other web server 
+
+21:37.800 --> 21:40.315
+so, we can just tight multiple web servers, they all talk to 
+each other
+
+21:40.315 --> 21:46.555
+they all use gossip protocol to communicate, 
+all of the state across all of the network are eventually consistent
+
+21:46.555 --> 21:50.850
+and we can plug this directly into browsers also,
+which is the next part
+
+21:50.850 --> 21:55.830
+so, after some login staff, yeah, here is our web server
+
+21:55.830 --> 22:06.090
+and, yes, we can use shoe, which is a module that I wrote
+all it is is really thin wrapper on top of sockjs that give you a stream
+
+22:06.090 --> 22:13.855
+that's all it does. that's amazing, you don't have to have
+like weird thing, you can just use modules, let's do that
+
+22:13.855 --> 22:22.250
+so, we have our stream right, and all we need to do to replicate
+is stream.pipe(createStream()).pipe(stream)
+
+22:22.250 --> 22:29.445
+and that's the mux-demux connection， it's exactly the same as
+our http streaming connection to replicate the states
+
+22:29.445 --> 22:36.385
+so, we wrote a function, it'll turn a string, we can use that
+anywhere to replicate anywhere browsers, servers like other servers
+
+22:36.385 --> 22:40.060
+it doesn't matter, we just send data and the network figures it out
+
+22:40.060 --> 22:44.955
+so, there's some plumbing in here too
+
+22:44.955 --> 22:50.545
+I snuck dnode into this example also because just why not
+
+22:50.545 --> 22:54.465
+here I have a function that I just defined and you know, 
+it's dnode 
+
+22:54.465 --> 23:01.275
+so, and with mux-demux, all I have to do is create an additional
+stream, and just like pipe it through
+
+23:01.275 --> 23:08.125
+and that's all, so, to recapitulate a little bit
+
+23:08.125 --> 23:10.535
+we have dnode stream, we've got mux-demux
+
+23:10.535 --> 23:14.095
+here's our browser code actually to render this
+
+23:14.095 --> 23:21.125
+so, it draws a big blue box and what's really cool is
+we are using actually exactly the same modules
+
+23:21.125 --> 23:25.545
+we won't actually know except for maybe there is document.body,
+this is actually browser code
+
+23:25.545 --> 23:28.710
+cuz we're using scuttlebutt, we're using mux-demux
+
+23:28.710 --> 23:31.725
+it's all just browser fights up, we're using emit-stream
+just the same
+
+23:31.725 --> 23:35.040
+it's pretty much the same code except it has dom staff in it
+
+23:35.040 --> 23:41.645
+so, we'll go through all of this, we just recap here a little bit
+and I'll actually run it and it'll be done
+
+23:41.645 --> 23:46.980
+so, we synchronize state across all uses, we listen for server events
+with the emit-stream
+
+23:46.980 --> 23:51.465
+we run multiple streams over mux-demux, we load balanced across
+multiple servers
+
+23:51.465 --> 23:55.430
+so, I am telling you I haven't actually demonstrate this yet
+
+23:55.430 --> 24:02.460
+in order a browser, we have an rpc control interface with dnode
+so that's the all the things
+
+24:02.460 --> 24:07.625
+so, let's actually run this beast
+
+24:07.625 --> 24:16.010
+so, the first thing I'll do is I'll browserify the last version
+that wasn't any good
+
+24:16.010 --> 24:28.090
+so, staticbundle.js cuz I think I was messing with that earlier
+and I'll run the server on port 8000
+
+24:28.090 --> 24:34.380
+cool, and I can visit it, HOLA LISBOA, that's from dnode actually
+
+24:34.380 --> 24:39.395
+and here we just have a box, the box, it's not very fancy
+
+24:39.395 --> 24:41.720
+all you can do is drag it, right?
+
+24:41.720 --> 24:50.865
+but, if we have another user connected, and if I make it
+smaller again
+
+24:50.865 --> 24:56.050
+goodness, ok, so if I move the box over here, cool
+if I move it there from over here
+
+24:56.050 --> 24:59.570
+you might have seen something like socket.io, and that's great
+that's reusable
+
+24:59.570 --> 25:02.115
+but, that's not intereasting enough
+
+25:02.115 --> 25:06.520
+let's actually have a load balanced server
+
+25:06.520 --> 25:16.785
+so, we'll run another server on port 8001 and connect it to other
+server on 8002, connected over stream and over everything
+
+25:16.785 --> 25:23.720
+so, oh, godness, it's a little bugness, oh no, damn it
+work damn it
+
+25:23.720 --> 25:33.640
+I am telling you this totally worked earlier, sort of 
+oh, there it goes, yes, it totally is working kind of a little bit
+
+25:33.640 --> 25:34.965
+it's bug there but like, that's the basic idea
+
+25:34.965 --> 25:44.765
+that is all that I have to say, we'll skip some pictures,
+use all of these modules, they are amazing
+
+25:44.765 --> 25:55.730
+thanks!
+
+
+
+
+
+
