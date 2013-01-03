@@ -195,445 +195,390 @@ abc, def, 查看output.txt文件就会发现，其内容和我们输入的完全
 叫做through stream，through stream是readable writable stream
 
 05:34.720 --> 05:40.005
-it's not the only kind of the readable writable stream, but it does
-as a readable writable stream that acts like a filter
+它也并非是唯一的一种readable writable stream，不过，它工作方式像
+readable writable stream（像过滤器（filter））
 
 05:40.005 --> 05:46.785
-so, for instance, the grep program in Unix, you know,
-takes stdin and does some things and write stdout
+举例来说，就好比是Unix中的grep，grep你应该知道吧，
+它接收stdin作为输入，做一些处理之后，将结果输出到stdout
 
 05:46.785 --> 05:48.845
-it's like from here to there
+就好像：从这里到那里
 
 05:48.845 --> 05:55.645
-so, we can make on these. If we create a new stream and we set
-both readable readable and writable to true
+下面就让我们来实践下，我们创建一个新的stream，并将readable和writable都设为true
 
 05:55.645 --> 05:57.585
-combining the previous two examples
+结合前两个例子
 
 05:57.585 --> 06:00.885
-we can have a write stream but we can also emit data
+我们可以拥有一个write stream，但同时还可以分发data事件
 
 06:00.885 --> 06:06.790
-and this is really cool, so, right here, I am uh just 
-uppercasing the input that I get to make a loud stream 
+很酷吧！这里，我将输入的字符以大写形式输出，以此来形成一个“扩音”stream的效果
 
 06:06.790 --> 06:10.925
-it'll be very loud for us, I did the same thing with the end
+效果会很明显，对于end函数，我们处理和先前保持一样
 
 06:10.925 --> 06:17.910
-and I'll pipe stdin to my ts, which should actually
-be called loud stream, like ls
+接下来，将stdin pipe到ts，ts效果类似ls
 
 06:17.910 --> 06:24.650
-so, that is 3.js, abc, hello lisboa and now end it
+好了，运行3.js，abc，hello lisboa，然后结束！
 
 06:24.650 --> 06:27.805
-oh, no, alright, I forgot to pipe that
+噢，不！噢，对，我忘记pipe了
 
 06:27.805 --> 06:33.920
-right, before, I had this, so, actually, I have to
-pipe the output somewhere for one to use it
+好吧，此前，代码是这样的，事实上，这里还需要讲ts pipe到输出源
 
 06:33.920 --> 06:43.045
-so I got 4.js and I'll say: beep boop and end it
-and we get uppercase messages
+好了，现在有了4.js，输入：beep boop 然后结束
+输出了大写形式的消息
 
 06:43.045 --> 06:46.425
-great, indeed, this is the through stream
+太棒了！这就是through stream
 
 06:46.425 --> 06:49.815
-alright, and this was writable stream and this is through stream
+好，这是writable stream、这是through stream
 
 06:49.815 --> 06:52.441
-this is a kind of picture I drew to illustrate what's going on
+这是一张我自己画的图，来解释刚刚发生的一切
 
 06:52.441 --> 06:57.485
-so you have a function in the middle and you have thought these
-two little convertible machines that do the things
+中间有个函数，两端是两个可互相转换的机器
 
 06:57.485 --> 07:02.380
-the next kind of thing that I think is important to talk about
-is: pause stream 
+接下来要介绍的内容我觉得也很重要：pause stream
 
 07:02.380 --> 07:05.540
-pause stream is a sort of through stream
+pause stream也是一类through stream
 
 07:05.540 --> 07:12.885
-well, in Node, there is a mechanism in pipe internally that 
-helps you handle back nature
+在Node中，pipe内部有一种机制，可以让你处理后续数据
 
 07:12.885 --> 07:21.680
-you call .pause and resume when you want to start it again
-a sort of like barrier a few green water and then you turn on 
-the tap to get new something
+调用pause暂停，并当想要重新开始获取数据时，就调用.resume，
+就好比是出水口有个阀门，关闭就不出水，打开就出水
 
 07:21.680 --> 07:25.525
-plumbing plumbing metaphors there if useful
+可以用水管互相连接来做比喻，如果这有助于理解的话
 
 07:25.525 --> 07:28.855
-so, I have an example for a pause stream
+这里有一个pause stream的例子
 
 07:28.855 --> 07:30.155
-here we can look at it
+我们来看下
 
 07:30.155 --> 07:41.645
-so, this is an http server that creates this output.txt file
-with all of the content that we put out here
+这是一个http服务器，它将我们的输入都写到output.txt文件
 
 07:41.645 --> 07:46.740
-so, I am gonna echo beep boop and I'll curl that and finally
-run this program
+我首先echo beep boop，接着用curl，最后运行该程序
 
 07:46.740 --> 08:02.180
-so, node 0.js and this program I'll curl -sSNT- localhost:3000 
-and so, told me ok
+node 0.js，接着输入curl -sSNT- localhost:3000
+看到了ok
 
 08:02.180 --> 08:07.510
-and now it should have written using the writable stream to output.txt
+现在，输入的内容应当已经通过writable stream写到output.txt文件中了
 
 08:07.510 --> 08:10.110
-so, we cat that out, oh, cool, we see our message
+好，我们cat出来看看，酷！看到了！
 
 08:10.110 --> 08:15.555
-super great, but, suppose our requirements change in this program
+超赞！但是，假设这个时候需求变更了
 
 08:15.555 --> 08:19.560
-so, maybe we have to make a directory before we can actually
-put the data somewhere
+假设现在要在写数据前需要先创建一个文件夹
 
 08:19.560 --> 08:24.595
-so, we have to call fs.mkdir with like a random id
+这个时候，我们就不得不调用fs.mkdir，并用一个随机的id来表示文件夹名字
 
 08:24.595 --> 08:29.645
-so, it will take this code to generate id and we'll
-put fs.mkdir on that
+所以，这段代码用来生成id，并将fs.mkdir放在这里
 
 08:29.645 --> 08:34.465
-ok, this seems we work through,right?
+好，应该差不多了，对吧？
 
 08:34.465 --> 08:43.220
-woo, see, the same thing and instead of telling res.end('ok')
-we write res.end with the id
+唔，看下，同样的，这里不再是res.end('ok')，而是以id结束
 
 08:43.220 --> 08:47.540
-so, it should tell us, Oops, and I need to write the right file
+好，结果应该是，哦不，貌似写多文件了
 
 08:47.540 --> 08:51.075
-node 2.js, correct!
+node 2.js, 就是它!
 
 08:51.075 --> 09:00.785
-ok, so node 2.js, ok, cool, so now gives this the id
-and it should be in data directory and output.txt file
+好，node 2.js，ok，酷！结果显示了id，数据就应该在数据目录下的output.txt文件中了
 
 09:00.785 --> 09:04.920
-holy crappy, it's empty! what's going on here?
+尼玛，居然是空的！怎么回事？
 
 09:04.920 --> 09:08.270
-let's just try that again, maybe, maybe it works this time
+我们再来试下，也许这次就好了
 
 09:08.270 --> 09:17.240
-uh, ok, so, we can cat out that, ok, so that time works!
-that's a little weird.
+好，果然好了！有点诡异
 
 09:17.240 --> 09:21.720
-uh, it wasn't an accident. There is some risk condition in this code.
+这并非“事故”，而是我们的代码有bug隐患
 
 09:21.720 --> 09:27.970
-we are calling fs.mkdir and then we are piping to a writable stream
+我们先调用fs.mkdir，然后pipe到writable stream
 
 09:27.970 --> 09:35.510
-so, you know, you can get in the case where you know data events 
-have come in before our callback fires of the fs.mkdir
+问题来了，如果data事件在fs.mkdir的回调前就分发了，就会出现问题
 
 09:35.510 --> 09:37.895
-how do we get around this? Pause stream of course
+那么怎么解决这个问题呢？答案当然是 pause stream
 
 09:37.895 --> 09:46.300
-if we alter a clutter a little bit, to do...
+我们只要稍微改下代码，就……
 
 09:46.300 --> 09:51.035
-alright, so, we required of course first, it's called pause-stream
-on NPM
+好，首先咱们要引入一个叫pause-stream的模块
 
 09:51.035 --> 09:53.450
-alright, and so, we make one and we'll pause it
+然后，创建一个pause stream，将其暂停
 
 09:53.450 --> 09:59.460
-and then, instead of piping our request to the ws object
+然后，这次不是将request pipe给ws对象
 
 09:59.460 --> 10:10.695
-we will pipe it..., ok, ps.pipe, let me just jump the last worked on
+而是pipe给…… ps.pipe，让我先回到上个版本
 
 10:10.695 --> 10:13.780
-ok, so we pipe a pause stream instead of the write stream
+好，我们pipe pause stream而不是write stream
 
 10:13.780 --> 10:21.025
-and it's pausing and then, at the end, we call resume to resume it
-once the callback is actually fired
+它暂停了，随后，在最后，回调函数触发后，我们调用resume来恢复stream
 
 10:21.025 --> 10:27.520
-not like eventually, you know, maybe some data is passed, maybe not
-now we actually resume it. pause stream will buffer the data for us
+在恢复stream的时候，也许数据已经过来了，也许还没有。pause stream会将数据buffer起来
 
 10:27.520 --> 10:35.750
-so, if we take our existing example and run updated version 
-and we curl to it
+继续刚刚这个例子，这次运行更新后的版本，然后用curl
 
 10:35.750 --> 10:40.660
-so, cat out this output, make sure ok, work that time
+再看看output文件，确认没错，这次对了
 
 10:40.660 --> 10:44.340
-so, you might notice this prints out the id
+你可能已经注意到了，服务器会返回id
 
 10:44.340 --> 10:49.725
-so, we can actually cat data, do some like 
-Unix aggregator there output.txt
+所以，事实上，我们可以使用Unix的聚合（aggregator），来打印output.txt中的数据
 
 10:49.725 --> 10:53.470
-ok, so now it's catting the file that is the outputs
+好，这就在输出文件内容
 
 10:53.470 --> 10:57.840
-and now, as you can see, every single time,
-we get the correct output
+如你所见，现在每次都能够获得正确的输出结果
 
 10:57.840 --> 11:01.715
-we just eliminate that risk condition where we get data with pause stream
+上述就是使用pause stream来规避此前获取数据的问题
 
 11:01.715 --> 11:03.755
-pause stream is great
+pause stream很赞
 
 11:03.755 --> 11:11.650
-so, Oops, the next thing is duplex streams
+好，下面要闪亮登场的是duplex stream
 
 11:11.650 --> 11:14.355
-duplex streams are also readable writable stream
+duplex stream也是readable writable stream
 
 11:14.355 --> 11:19.565
-but, duplex streams are really cool because they
-are like a telephone you know
+不过，duplex非常酷，因为它很想电话
 
 11:19.565 --> 11:22.705
-it's not just a filter like grep like through stream
+它不仅仅像through stream那样是一个过滤器（如grep）
 
 11:22.705 --> 11:24.470
-but it's like a sort of conversation
+它更像是“谈话”
 
 11:24.470 --> 11:29.395
-you have site A talks to site B, but then site B needs
-like talk back to site A
+比方说，A要和B通话，这个时候，B也需要和A通话
 
 11:29.395 --> 11:33.170
-and sort of these circular ongoing communication
+就像这类循环的实时通讯
 
 11:33.170 --> 11:38.610
-if you see, a.pipe(b).pipe(a) or something like that
+如屏幕所示，a.pipe(b).pipe(a) 诸如此类
 
 11:38.610 --> 11:41.610
-you probably, you most definitely have a duplex stream
+也许，不，应该是你肯定用过duplex stream
 
 11:41.610 --> 11:55.845
-so, and uh, there's sweet module called duplexer that was 
-actually taking out of the module called event-stream
+有个很好的模块叫duplexer，它衍生自event-stream模块
 
 11:55.845 --> 12:02.545
-that let you take like readable stream and writable stream
-and like smooch them together into a duplex stream
+它可以将readable stream和writable stream合成到一个duplex stream中
 
 12:02.545 --> 12:06.605
-duplex streams are sort of like the voltron of streams
-in that respect
+从某种意义上来说，duplex可以说是stream之王
 
 12:06.605 --> 12:13.360
-especially when you have a request and response object
-you can serve like plumb them together to make this
-duplex stream
+特别是当你有一个request对象和response对象时，就可以将两者拼接起来，形成一个duplex stream
 
 12:13.360 --> 12:22.665
-and that's really cool because you can take like other
-duplex stream and take the request and response pipe that
-to another stream and pipe that back to the duplex
+这样很酷，因为你可以将其他的duplex stream以及request、response对象拼接在一起
+再将其拼接到另外一个stream上，然后再拼回到duplex stream
 
 12:22.665 --> 12:25.600
-because duplex is awesome and like that
+duplex真的超赞
 
 12:25.600 --> 12:31.630
-it's... you'll see a lot of that. I actually skip this section
+在后面会看到很多duplex stream，这里暂且先跳过
 
 12:31.630 --> 12:37.440
-so, another kind of through stream that I definitely definitely
-wanna talk about is called JSONStream
+好了，另外一种through stream，我一定，一定要介绍的，就是JSONStream
 
 12:37.440 --> 12:38.985
-JSONStream is really awesome
+JSONStream也超赞！
 
 12:38.985 --> 12:48.025
-so, suppose I have a 125Mb JSON file for all of the 
-property boundaries in San Francisco
+假设这里有一个125Mb大的文件，包含了旧金山的所有的地界信息
 
 12:48.025 --> 12:53.455
-this file exists and it's awesome, I've rendered it 
-it took like three hours
+真的有这个文件哦，我花了将近3小时才搞定
 
 12:53.455 --> 13:02.040
-so, like, if we just straight up, if we just straight up
-like try to load this into the memory
+如果，我们“霸王硬上功”——直接讲其载入到内存中
 
 13:02.040 --> 13:05.230
-you'll gonna wait a long time
+你非得等上一段很长的时间不可
 
 13:05.230 --> 13:10.845
-that takes like several minutes, it's actually loaded
+完全载入，也许得花上几分钟的时间，
 
 13:10.845 --> 13:16.675
-but if we use the power of streams here with this module
-called JSONStream
+而如果我们这里发挥stream的威力，使用JSONStream模块的话
 
 13:16.675 --> 13:18.790
-we can actually make some progress
+会提升不少（时间短很多）
 
 13:18.790 --> 13:24.230
-so, say going back to the streams, set the value we want to get
+回到stream，设置我们要获取的值
 
 13:24.230 --> 13:37.215
-is the coordinates data, that's inside of the features key, but
-that's inside of the geometry key
+是坐标（coordinates）属性，该属性在features键中，features中geometry键
 
 13:37.215 --> 13:42.370
-but that's inside of the coordinates key, 
-the coordinates key is the thing we actually wanna use
+里面有coordinates键，coordinates键就是我们真正需要的数据
 
 13:42.370 --> 13:50.675
-so, how do we do that, we use JSONStream and JSONStream.parse
-takes an array of sort like key/values 
+那么，怎么做呢？我们用JSONStream，JSONStream.parse，该方法接收一个包含类似键/值形式的数组作为参数
 
 13:50.675 --> 13:53.375
-not just key/values, you can actually have like some patterns or anything
+事实上不仅仅是键/值，还可以用一些模式等
 
 13:53.375 --> 14:00.235
-so, "features" is actually an array, so, 
-if we've gonna every element, we can specify true instead of string name
+“features”是一个数组，所以，如果我们需要数组所有的元素，就可以简单的指定true即可，
+无需将所有的名字列出来
 
 14:00.235 --> 14:03.755
-and we can lookup the geometry key, we can look up the coordinates key
+接下来是geometry键，然后是coordinates键
 
 14:03.755 --> 14:11.860
-and we can just console.dir the values, and take a read stream
-and pipe that into the parser here
+我们只需用console.dir将值打印出来，并将一个read stream pipe给parser
 
 14:11.860 --> 14:17.550
-and so , if I run that program, maybe I forget a step here
+好了，运行该程序，也许少了一步
 
 14:17.550 --> 14:23.590
-oh, I am still in the pause-stream example, that's why 
-you guys should come on that
+噢，我还在pause stream的例子中，这就是为啥没有反应
 
 14:23.590 --> 14:26.290
-ok, if I run this example, ok, sweet
+好，再次运行该程序，好，酷！
 
 14:26.290 --> 14:37.405
-so, instead of just you know, fs.readFile('citylots.json'),
-we don't have to wait for that to load the whole damn thing into the memory
+和fs.readFile('citylots.json')不同，
+我们不用将所有的数据都载入内存
 
 14:37.405 --> 14:40.190
-we can just like start processing it, right away
+我们直接就可以处理
 
 14:40.190 --> 14:44.910
-and what's really cool too is what we can is actually stream
+非常酷吧，stream好样的！
 
 14:44.910 --> 14:51.340
-so, suppose we'll gonna make like some vast transformation that's
-gonna read an stream and like write back out to a file
+再来做些改动，假设我们这次需要从stream中读取数据，并将其写回到文件中
 
 14:51.340 --> 14:58.715
-no problem, we can use JSONStream.stringify for that,
-that's exactly a kind of this part but streaming for JSON
+没问题，我们可以用JSONStream.stringify
+这和JSON的stringify类似，只是是stream的方式
 
 14:58.715 --> 15:04.090
-so, we can do stringify.pipe to a write stream, here coords.json
+我们可以stringify.pipe 到一个write stream，这里就是coords.json文件
 
 15:04.090 --> 15:11.220
-and so, if I run this file, which is 9.js
+好，我们运行9.js
 
 15:11.220 --> 15:20.050
-ok, it's just sitting there, that's because it's actually
-writing to this file corrds.json
+卡住了，这是因为正在往coords.json文件中写数据
 
 15:20.050 --> 15:25.060
-and if we munch that, it's actually growing continuouslly
+如果我们查看下文件内容的字数，就会发现在不断增长
 
 15:25.060 --> 15:29.255
-that's because our stream is letting it do that
-you know, we don't have to buffer the whole thing in the memory
+这是因为stream正在工作，我们不需要将整个一大坨数据加载到内存中
 
 15:29.255 --> 15:32.285
-which is really really important if you're writing 
-scalable web services
+这对于书写可伸缩的web服务而言，非常非常的重要
 
 15:32.285 --> 15:35.105
-which if you're writing Node, that's worth you are really good at
+尤其是写Node的时候，应当要非常擅长处理这类事情
 
 15:35.105 --> 15:41.890
-so, uh, yes, you use JSONStream parsers where possible
+记得在适用的场景下，尽可能的使用JSONStream
 
 15:41.890 --> 15:47.115
-so, the next crazy thing that I want to show you
-is called scuttlebutt
+好，下一个要展示的，酷毙了的东西叫scuttlebutt
 
 15:47.115 --> 15:52.245
-scuttlebutt is ..., 
-ok, yes, DNode is another example of duplex stream
+scuttlebutt是……
+哦，对了，dnode也属于duplex stream一例
 
 15:52.245 --> 15:55.930
-which we'll get to a little bit with the craziness
+dnode会在后面我要展示的“碉堡”了的demo充当重要角色
 
 15:55.930 --> 16:03.060
-still to come, so, scuttlebutt is, the term comes to term
-not cool term for water cool basically
+言归正传，scuttlebutt并非是指和水相关的装置
 
 16:03.060 --> 16:11.900
-so, scuttlebutt is a gossip protocol, that where you have 
-all of these nodes and network sort of like talk with each other
+这里的scuttlebutt是一种gossip协议，用来使得网络中不同节点间能够通讯
 
 16:11.900 --> 16:17.570
-and there's not like canonical source of data,
-they sort of just pass messages around
+它没有标准的数据源，而只是到处传递消息
 
 16:17.570 --> 16:24.130
-in order to have an entire state and it's eventually 
-consistent, which is awesome, it's history based algorithm
+为了同步状态，这很酷，它属于一种基于历史的算法（history based algorithm）
 
 16:24.130 --> 16:31.506
-it's crazy awesome, so, to use scuttlebutt
+应该说这超赞，好，要使用scuttlebutt
 
 16:31.506 --> 16:38.305
-here I am just using the scuttlebutt model and if you like more
-practical example, you can actually checkout this module called crdt
+这里我只使用scuttlebutt模型，如果要看更多相关的例子，可以看一个叫crdt的模块
 
 16:38.305 --> 16:43.470
-but, so, scuttlebutt models, you can just create some streams
-for each of them
+通过scuttlebutt模型, 每个模型都可以创建stream
 
 16:43.470 --> 16:50.981
-and, like set a value here, set a value on node A
-pipe that to node B
+这里，在A节点上设置一个值，并将它pipe给B节点
 
 16:50.981 --> 17:01.185
-if we run this, cool, so, we actually got the event on node B
-even though we set the value on node A
+运行该程序，酷！尽管我们是在节点A上设置的值，但是我们可以在节点B上捕获到事件
 
 17:01.185 --> 17:04.835
-and we are just piping here, so we can actually do that 
-over network connection
+这里我们只是pipe出去，事实上，我们可以将其用在网络连接上
 
 17:04.835 --> 17:11.795
-so, here I create a http server, and we'll just do similar thing
-where we sort of have keys and values
+这里，创建一个http服务器，然后做些类似设置值，取值的操作
 
 17:11.795 --> 17:20.035
-and this part is really cool, so if we ...
-the first argument is port number 
+这部分很酷，如果沃恩……
+第一个参数是端口号
 
 17:20.035 --> 17:27.550
 so we listen on port 8000 and we can curl to this

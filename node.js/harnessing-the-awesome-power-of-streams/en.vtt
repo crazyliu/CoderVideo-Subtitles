@@ -233,7 +233,7 @@ it's like from here to there
 
 05:48.845 --> 05:55.645
 so, we can make on these. If we create a new stream and we set
-both readable readable and writable to true
+both readable and writable to true
 
 05:55.645 --> 05:57.585
 combining the previous two examples
@@ -584,7 +584,7 @@ and so, if I run this file, which is 9.js
 
 15:11.220 --> 15:20.050
 ok, it's just sitting there, that's because it's actually
-writing to this file corrds.json
+writing to this file coords.json
 
 15:20.050 --> 15:25.060
 and if we munch that, it's actually growing continuouslly
@@ -609,7 +609,7 @@ is called scuttlebutt
 
 15:47.115 --> 15:52.245
 scuttlebutt is ..., 
-ok, yes, DNode is another example of duplex stream
+ok, yes, dnode is another example of duplex stream
 
 15:52.245 --> 15:55.930
 which we'll get to a little bit with the craziness
