@@ -199,7 +199,7 @@ ends, we just print that out to stdout
 
 04:57.480 --> 05:06.045
 so here write, you now have byte equal zero and call sequals 
-the buf.length ever time, at the end, I print byte count message
+the buf.length every time, at the end, I print byte count message
 
 05:06.045 --> 05:16.080
 so, if I run this program, abc, def, and now I end it,
@@ -213,7 +213,7 @@ so, that's writable stream.
 the next thing that I think is super important, to be realized is
 
 05:23.360 --> 05:30.245
-this is an idea(a concept) I treat from Domnita who will be a 
+this is an idea(a concept) I treat from Dominictarr who will be a 
 recurring theme draft the sock
 
 05:30.245 --> 05:34.720

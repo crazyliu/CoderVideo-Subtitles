@@ -34,190 +34,165 @@ WEBVTT
 酷毙了，归功于这个“疯子”，我们现在有了Stream
 
 00:49.985 --> 00:55.455
-uh, but basicly Streams let you treat programs as just little pieces
+简单来说，stream视程序为一段段代码片段
 
 00:55.455 --> 00:58.830
-little pieces like garden hoses that you can just plumb together
+就好比是花园中的软管，可以拼接在一起
 
 00:58.830 --> 01:01.915
-I think plumbing metaphor a really apt for lot of this staff
+我觉得这里用软管拼接的比喻相当贴切
 
 01:01.915 --> 01:04.435
-so, the first kind of Streams that we have is readable Stream
+首先要介绍的第一种stream是readable stream
 
 01:04.435 --> 01:08.980
-and so, readable Streams are just event vendors that made a data event and an end event
+readable stream其实就是事件提供商（event vendor），产生data事件和end事件
 
 01:08.980 --> 01:10.645
-maybe some other one, those aren't important
+也许不止如此，不过那些都不重要
 
 01:10.645 --> 01:17.120
-uh, so, we can write a readable stream here
+我们来举个readable stream的例子
 
 01:17.120 --> 01:19.525
-vi start.js(explain: It seams like opening a file with vi editor)
+vi start.js(备注: 用vi编辑器打开start.js文件)
 
 01:19.525 --> 01:23.290
-ok, so, first thing you do, uh, you've probably seen this before
+ok，首先要做的，也许你见过
 
 01:23.290 --> 01:29.155
-uh, we fs.createReadStream and we can just like 
-here I've got dictionary of like hundred thousand words
+我们用fs.createReadStream，我这里有个字典文件，里面有很多单词
 
 01:29.155 --> 01:35.120
-uh, and I can just pipe this just like in Unix was pipe stderr to stdout
+然后，可以用pipe，就好比Unix中将stderr pipe到stdout
 
 01:35.120 --> 01:42.770
-and if I run this, uh, cool, so I get light all of the words printed just on stdout
+然后，执行它，酷！所有的单词都在stdout打印出来了
 
 01:42.770 --> 01:50.715
-what's really cool about Streams is you don't you know buffer the whole thing
-into memory first. You just can incrementally output every single piece
+stream真正酷的地方在于，你知道吗，不需要将所有的数据先全部载入到内存中。而是会一段段数据不间断地输出
 
 01:50.715 --> 01:56.310
-uh, in the stream and that's really cool because you get results like immediately
+在stream中，这真的很酷，因为（执行）结果就好像是即时获得的
 
 01:56.310 --> 02:05.285
-and, Let you write a lot of really interesting abstractions in the some other things
-like {end: false} if you don't want stream to give up writing to stdout you do that about
+除此之外，你还可以写出更加有意思的程序，比方说，如果不想让stream在stdout上写完数据后退出的话，
+可以使用{end: false}
 
 02:05.285 --> 02:11.145
-uh, so, to write a stream like without just using a stream, it's a little bit more complicated
+相比用stream而言，自己写一个stream有些许复杂
 
 02:11.145 --> 02:16.210
-uh, the first you do for readable stream, and these little changes,
-so don't worry about memorizing all this.
+对于readable stream，首先要做的，代码有少许改变，不过不用太担心，也不用去强记
 
 02:16.210 --> 02:19.780
-the first thing you do is you set readable to true, the attribute
+首先要做的就是将readable属性设置为true
 
 02:19.780 --> 02:25.646
-uh, it's all here. I've got just this example, it just emits the data event
-and (the data) just has counter
+这里就是这个简单例子所有的代码：它分发data事件，（数据）就是一个计数器
 
 02:25.646 --> 02:30.950
-so, if you run that, ah, ah, ah, 5.js
+如果运行5.js文件
 
 02:30.950 --> 02:35.560
-cool, so in the very bottom down there, you can see this infinite string of digits
+酷！在屏幕最下方，能看到一串无限长的数字
 
 02:35.560 --> 02:38.520
-it's getting faster and faster, cuz, there are more digits and real numbers
+并且输出速度越来越快，这是因为数字越来越多
 
 02:38.520 --> 02:49.370
-but, uh, if we want to say end that after uh, after two seconds, 
-we can just emit an end event.
+不过，如果想要在两秒钟后停止的话，我们只要分发end事件即可
 
 02:49.370 --> 02:52.290
-so, one, two and it's done!
+好了，一秒、两秒，结束！
 
 02:52.290 --> 03:00.385
-cool, so, what's really cool I mean besides the fact 
-we can just pipe things around, uh.
+酷！除了能够pipe数据之外，真正酷的还在于
 
 03:00.385 --> 03:04.960
-we can actually also create writable stream since scratch
+我们还能从头开始创建writable stream
 
 03:04.960 --> 03:11.155
-so, like you probably, my hopefully, have seen this 
-in Node if you used Node a lot
+如果你对Node很熟悉，你或许（我也希望）对下面的代码很熟悉
 
 03:11.155 --> 03:14.760
-fs.createWriteStream, it's awesome, because
+fs.createWriteStream, 赞~
 
 03:14.760 --> 03:18.250
-all you have to do is just write data to it
+因为，剩下的就是往stream里面写数据
 
 03:18.250 --> 03:27.595
-and it has been in a file, so you don't have to like
-have a big stream or big buffer like concat all these 
-messages one by one on to some growing thing
+由于这里已经是一个文件了，就没有像用一个大stream或者大的buffer来将
+后续的数据拼接起来的必要了
 
 03:27.595 --> 03:35.185
-you can just, uh, well, so I run this program and I 
-cat output.txt
+你只需……，好了，如果运行该程序，并cat output.txt（查看文件内容）
 
 03:35.185 --> 03:39.235
-oh, cool, I have the same output as in my file
+噢，酷！数据结果一样
 
 03:39.235 --> 03:48.125
-uh, so another cool thing you can do is you can take 
-readable streams like process.stdin as a standard readable streams
-and pipe them to your writable stream
+还有一个很酷的就是：你可以将像process.stdin这样的readable stream视作标准的readable stream
+并将其pipe给writable stream
 
 03:48.125 --> 03:50.720
-so, if I run this program which is 2(.js)
+如果运行2（.js）文件
 
 03:50.720 --> 03:58.840
-then , abc, def, and we'll cat output.txt
-and see that it's exactly what we typed,
-so that's as we might expect
+abc, def, 查看output.txt文件就会发现，其内容和我们输入的完全一致
+和我们预期的一样
 
 03:58.840 --> 04:04.330
-so, creating these writable streams since scratch
-is a bit more complicated
+从头开始创建这类writable stream有点难度
 
 04:04.330 --> 04:06.145
-so, the first thing we do is set writable to true
+首先，将writable属性设置为true
 
 04:06.145 --> 04:12.665
-this is used by pipe internally to make it, 
-so that we can process.stdin.pipe to writable stream
+这个属性是pipe内部使用的，这样我们就能process.stdin.pipe到writable stream了
 
 04:12.665 --> 04:17.810
-so we said a writable stream and we set an end function
-and of course you have to be a little more careful in Node
+我们有了writable stream，并设置了end函数，在Node中，此处要注意（选中的代码行）
 
 04:17.810 --> 04:20.985
-cuz, it is just of convention, or you can call 
-.end with an object
+这只是种约定，你也可以调用end函数，并传入一个对象
 
 04:20.985 --> 04:27.550
-and that we'll call .write, so that's just one thing
-to be a little careful of
+我们调用.write，记得这里要留意下
 
 04:27.550 --> 04:31.025
-but if you use some libraries that problem goes away
+不过，如果使用一些第三方库的话，就没有这个问题了（库一般会处理掉）
 
 04:31.025 --> 04:42.410
-so, if we run this program, we can do a similar kind
-of thing and here it's just log in all of the values 
-that I am typing
+好了，如果运行该程序，就能做类似的事情：将所有输入的内容打印出来
 
 04:42.410 --> 04:47.520
-uh, if I end this stream, I get a handy little end message
-that accesses a mention point
+如果结束stream，就能看到一个end!的提示消息
 
 04:47.520 --> 04:52.690
-triple cool! So, we can actually do something useful here
-this custom writable stream.
+超酷！事实上，我们可以利用自定义writable stream做更有用的事情
 
 04:52.690 --> 04:57.480
-how about let's just count all the bytes and when the stream
-ends, we just print that out to stdout
+比方说，我们来统计输入的字节数，并在stream结束时，将结果输出到stdout
 
 04:57.480 --> 05:06.045
-so here write, you now have byte equal zero and call sequals 
-the buf.length ever time, at the end, I print byte count message
+代码就在这里，首先从0开始，并且每次都加上buf.length，最后，输出字节总数
 
 05:06.045 --> 05:16.080
-so, if I run this program, abc, def, and now I end it,
-and byte counts 8 which make sense because three and a new line is 4,
-and 4 is 8, cool!
+运行该程序，abc，def，好，结束！结果输出字节总数为8
+因为每行还有一个换行符（一行就是4个），酷！
 
 05:16.080 --> 05:18.885
-so, that's writable stream.
+好了，这就是writable stream
 
 05:18.885 --> 05:23.360
-the next thing that I think is super important, to be realized is
+下面要介绍的非常重要
 
 05:23.360 --> 05:30.245
-this is an idea(a concept) I treat from Domnita who will be a 
-recurring theme draft the sock
+这是一个从Dominictarr借鉴过来的想法（概念）
 
 05:30.245 --> 05:34.720
-it's called the through stream, so through stream is a readable 
-wirtable stream
+叫做through stream，through stream是readable writable stream
 
 05:34.720 --> 05:40.005
 it's not the only kind of the readable writable stream, but it does
