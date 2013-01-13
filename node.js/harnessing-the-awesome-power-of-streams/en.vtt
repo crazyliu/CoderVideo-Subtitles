@@ -859,7 +859,7 @@ and that's the mux-demux connection， it's exactly the same as
 our http streaming connection to replicate the states
 
 22:29.445 --> 22:36.385
-so, we wrote a function, it'll turn a string, we can use that
+so, we wrote a function, it'll turn a stream, we can use that
 anywhere to replicate anywhere browsers, servers like other servers
 
 22:36.385 --> 22:40.060
@@ -965,7 +965,7 @@ let's actually have a load balanced server
 
 25:06.520 --> 25:16.785
 so, we'll run another server on port 8001 and connect it to other
-server on 8002, connected over stream and over everything
+server on 8000, connected over stream and over everything
 
 25:16.785 --> 25:23.720
 so, oh, godness, it's a little bugness, oh no, damn it

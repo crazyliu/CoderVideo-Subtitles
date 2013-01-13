@@ -581,325 +581,271 @@ dnode会在后面我要展示的“碉堡”了的demo充当重要角色
 第一个参数是端口号
 
 17:20.035 --> 17:27.550
-so we listen on port 8000 and we can curl to this
+所以，我们监听8000端口，并利用curl向该端口发送http请求
 
 17:27.550 --> 17:31.325
-so, that's getting key a, but I can set it for printing equals
+这条命令是获取键a的值（结果是undefined），这里还可以设置键a的值
 
 17:31.325 --> 17:35.410
-now, I get key a, it's 5, that's neat and I can do that
-as much as I want
+现在我获取到了键a的值为5，非常简单，想怎么设就怎么设，想设多少就设多少
 
 17:35.410 --> 17:44.400
-but if I spin up another server on port 8001 and
-connect that with scuttlebutt to port 8000
+然而，如果我再起一台服务器，监听8001端口，并将其通过scuttlebutt和8000端口上的服务器相连
 
 17:44.400 --> 17:50.455
-now I can curl localhost:8001 key a, that's the same
-and I can actually set it to new value
+这时，我就能通过curl localhost:8001/a 也能获取到a的值，当然，还可以通过8001上的服务器给a设置新值
 
 17:50.455 --> 17:54.855
-and get it on port 8000 and that value is proper got
+然后再从8000端口上的服务器获取a的值，也获得了最新的值
 
 17:54.855 --> 17:59.605
-but it's cooler, because we can actually connect,
-it's not just like a client-server thing
+很酷吧，不过远不止如此，我们并非只能连接客户端-服务器端
 
 17:59.605 --> 18:10.010
-we can actually connect ..., here I'll spin up a new server
-on port 8002, but I only connect it to ... port 8002 to port 8001
+事实上，还可以连接……这里，我新起一台监听8002的服务器，但，我只将其和8001端口上的服务器相连
 
 18:10.010 --> 18:19.755
-and if I turn to get ..., if I turn to set a value on 8002
+这是，如果我尝试获取……，如果我在8002上设置a的值
 
 18:19.755 --> 18:24.365
-and then I get it on 8000, it should be the same value
-and it is!
+随后在8000上获取它，应该能够获取到相同的值，哈哈，如我所言！
 
 18:24.365 --> 18:33.940
-this is because ... so, the server on 8002 is not directly 
-connected to 8000, it's only connected through the server 8001
+这是因为……，8002端口上的服务器并没有直接和8000端口上的服务器相连，它只和8001上的相连
 
 18:33.940 --> 18:40.705
-so, basically, if you have connectedness in your graph of streams
-that where everything is piped together
+好，简单来说，只要stream互相之间能够连通
 
 18:40.705 --> 18:43.605
-the whole state of the entire network be eventually consistent
+那么整个网络中结点的状态最终都会同步
 
 18:43.605 --> 18:46.020
-you can just set values and get them elsewhere
+你只需要在此处设置，就能随时从彼处取值
 
 18:46.020 --> 18:51.865
-and you don't have to worry about like caving client and server
-and how to caving a cluster of database peered to each other 
+无需担心，类似于如何同步客户端和服务端、如何保证数据库cluster结点间如何做数据一致
 
 18:51.865 --> 18:58.740
-which, I'll totally rush to next part is ... skipping that
+好，下面将全面进入下一部分，那就是……（跳过这里）
 
 18:58.740 --> 19:02.690
-this craziness
+这部分非常精彩
 
 19:02.690 --> 19:06.865
-so, don't worry, I'll go very fast and it'll be so awesome
+不用担心，我会很快给大家演示，保证让你们目瞪口呆
 
 19:06.865 --> 19:13.910
-so, let's build a streaming web app that synchronizes state
-across all users
+我们来构建一个streaming web应用，该应用功能如下：同步所有用户的状态；
 
 19:13.910 --> 19:16.105
-listens for server events, has an rpc control interface
+监听服务器端事件；rpc控制接口；
 
 19:16.105 --> 19:19.515
-runs multiple streams over mux-demux, in node and the browser
+通过mux-demux在node端和浏览器端运行多个stream；
 
 19:19.515 --> 19:24.840
-and load balanced across multiple web servers that
-peering with each other over scuttlebutt which is 
-gossip protocol
+并且在多台web服务器之间做负载均衡，使用scuttlebutt（gossip协议）
 
 19:24.840 --> 19:28.105
-ok, that sounds awesome, let's do it
+好了，听起来很赞吧，那就开始吧
 
 19:28.105 --> 19:32.210
-so, the first thing we need to do is well, we'll create a scuttlebutt
-model and we'll create a web server
+首先要做的就是创建一个scuttlebutt模型，并创建一个web服务器
 
 19:32.210 --> 19:35.940
-and here the web server just listens on the port
+这里，web服务器就只监听在（指定的）端口
 
 19:35.940 --> 19:41.265
-well, what happened, it was gonna too fast, that's crazy
+嗯？什么情况？可能是太快了
 
 19:41.265 --> 19:46.760
-ok, so, we create a web server, we'll create a stream
+好了，我们创建一个web服务器，创建一个stream
 
 19:46.760 --> 19:50.785
-and then, we can just add a thing here
+接下来，我们只需在这里加一样东西
 
 19:50.785 --> 19:56.010
-so, if you are familiar with couchdb, it has sweet
-replicate api but what we can succeed about it is
+知道couchdb吧，它的api很赞，不过，我们能做的更赞，那就是
 
 19:56.010 --> 20:00.490
-you can only ... it's lot of only ... it's fully like 
-servers connecting clients
+就像是服务器和客户端连接
 
 20:00.490 --> 20:07.005
-but, with this, anybody can connect to our server, replicate
-and not only replicate from us but replicate to us
+但，我们这里，任何人都可以连接到我们的服务器，复制状态，这里不仅仅是从我们这里复制，还能复制给我们
 
 20:07.005 --> 20:13.055
-and that information will be passed around our entire network
-over streams, it would be, it's gonna be really awesome
+状态信息会通过streams，在整个网络间传递，这简直酷毙了
 
 20:13.055 --> 20:23.895
-ok, so, some other thing, we'll use this module I wrote called
-emit-stream to turn a event emitter into a stream and back
-into an event emitter again
+好，另外，我们还要用到一个我写的叫emit-stream的模块，用来将事件分发器和stream进行互相转化
 
 20:23.895 --> 20:31.085
-so, we can use other crazy awesome module called mux-demux
-which is mentioned earlier today, which is awesome
+我们还会用到此前提过的，叫mux-demux的模块，这个模块很赞
 
 20:31.085 --> 20:37.305
-and that let us take multiple streams, pack them into a single stream
-and I have a picture of this
+它能将多个stream，封装成一个stream，我画了一张图来对其做解释说明
 
 20:37.305 --> 20:43.520
-well, that's emit-stream, oh, where is my picture, it was awesome
-anyway, it doesn't matter
+这是emit-stream，我的图片在哪里？好吧，它肯定在，不管了，没关系
 
 20:43.520 --> 20:50.810
-so, we have a mux-demux and that just like is a crazy video thing
+好，我们有了mux-demux，它就像一个神物
 
 20:50.810 --> 20:56.790
-so, whatever mux-demux, we'll create a stream called state
-that's for our synchronization
+通过mux-demux，我们创建一个名为state的stream，用来做同步
 
 20:56.790 --> 21:00.375
-and we can create another stream called events
-that's for our event system
+我们再创建另外一个叫events的stream用于系统事件
 
 21:00.375 --> 21:05.770
-which will turn an event emitter into a stream
-back to an event emitter on the other side and  vice versa
+它会将事件分发器转变为stream，在另一端则将stream变为事件分发器，反之亦然
 
 21:05.770 --> 21:12.815
-ok, cool, so, the other thing we can do is actually emit events
+好，酷！另外要做的就是分发事件
 
 21:12.815 --> 21:19,615
-and we can emit like a part event also when the request ends
-it's a kind cool
+当请求结束时，我们分发“part”事件，有意思吧
 
 21:19,615 --> 21:21.805
-so, this part is really freaking awesome
+这部分真心赞！
 
 21:21.805 --> 21:26.080
-so, we have this, you know that slices string that I show you
+看这里，我们将字符串切割成数组
 
 21:26.080 --> 21:32.940
-so, now , for every additional argument passed the initial 
-argument that I give which is the port number 
+现在，所有端口号之后额外的参数
 
 21:32.940 --> 21:37.800
-it'll connect and replicate with in a period of fashion
-every other web server 
+都指定了和其他参数端口上web服务器相连接
 
 21:37.800 --> 21:40.315
-so, we can just tight multiple web servers, they all talk to 
-each other
+所以，我们只要起多台web server，它们互相之间都会通讯
 
 21:40.315 --> 21:46.555
-they all use gossip protocol to communicate, 
-all of the state across all of the network are eventually consistent
+它们使用gossip协议来通讯，所有服务器之间的状态都会同步
 
 21:46.555 --> 21:50.850
-and we can plug this directly into browsers also,
-which is the next part
+这部分代码可以直接放到浏览器端，下部分会介绍
 
 21:50.850 --> 21:55.830
-so, after some login staff, yeah, here is our web server
+登录之后，对，这就是我们的web服务器
 
 21:55.830 --> 22:06.090
-and, yes, we can use shoe, which is a module that I wrote
-all it is is really thin wrapper on top of sockjs that give you a stream
+我们可以用shoe，这也是我自己写的模块，它其实就是讲sockjs做了封装，提供了stream功能
 
 22:06.090 --> 22:13.855
-that's all it does. that's amazing, you don't have to have
-like weird thing, you can just use modules, let's do that
+它干的就这么多。但却很酷，你无需关心旁枝末节，用模块就是，来吧
 
 22:13.855 --> 22:22.250
-so, we have our stream right, and all we need to do to replicate
-is stream.pipe(createStream()).pipe(stream)
+好了，stream准备就绪，我们还需要做的复制工作就是stream.pipe(createStream()).pipe(stream)
 
 22:22.250 --> 22:29.445
-and that's the mux-demux connection， it's exactly the same as
-our http streaming connection to replicate the states
+这是mux-demux连接，这和我们http streaming连接是一样的，都是用来复制（不同结点间）状态的
 
 22:29.445 --> 22:36.385
-so, we wrote a function, it'll turn a string, we can use that
-anywhere to replicate anywhere browsers, servers like other servers
+好了，我们写了一个函数，用于创建stream，然后，用它在任何地方（浏览器、服务器/其他服务器）来复制状态
 
 22:36.385 --> 22:40.060
-it doesn't matter, we just send data and the network figures it out
+我们只需要发送数据即可，轻松愉快，接下来的事情，网络间不同结点会自动同步
 
 22:40.060 --> 22:44.955
-so, there's some plumbing in here too
+这里还有一件事情
 
 22:44.955 --> 22:50.545
-I snuck dnode into this example also because just why not
+这个例子中还用了dnode，理由就是：为什么不用呢？！
 
 22:50.545 --> 22:54.465
-here I have a function that I just defined and you know, 
-it's dnode 
+这里，用dnode定义了一个函数
 
 22:54.465 --> 23:01.275
-so, and with mux-demux, all I have to do is create an additional
-stream, and just like pipe it through
+有了mux-demux，我要做的就是再创建一个stream，将它pipe出去
 
 23:01.275 --> 23:08.125
-and that's all, so, to recapitulate a little bit
+好了，完工！简单回顾下
 
 23:08.125 --> 23:10.535
-we have dnode stream, we've got mux-demux
+我们有dnode stream、mux-demux
 
 23:10.535 --> 23:14.095
-here's our browser code actually to render this
+这里是浏览器部分的代码，用来渲染
 
 23:14.095 --> 23:21.125
-so, it draws a big blue box and what's really cool is
-we are using actually exactly the same modules
+它负责绘制一个蓝色的大盒子，这里很酷的地方在于，我们用了同样的模块
 
 23:21.125 --> 23:25.545
-we won't actually know except for maybe there is document.body,
-this is actually browser code
+要不是这里有document.body这样的代码，恐怕很难看出这是浏览器端的代码吧
 
 23:25.545 --> 23:28.710
-cuz we're using scuttlebutt, we're using mux-demux
+我们用了scuttlebutt、mux-demux
 
 23:28.710 --> 23:31.725
-it's all just browser fights up, we're using emit-stream
-just the same
+这些都是在浏览器端用哦~，还有emit-stream也不例外
 
 23:31.725 --> 23:35.040
-it's pretty much the same code except it has dom staff in it
+除了dom操作部分的代码，其余代码几乎完全一样
 
 23:35.040 --> 23:41.645
-so, we'll go through all of this, we just recap here a little bit
-and I'll actually run it and it'll be done
+好了，以上就是简单的代码回顾，等下我会运行这个例子，然后……就没有然后了（结束了）
 
 23:41.645 --> 23:46.980
-so, we synchronize state across all uses, we listen for server events
-with the emit-stream
+我们同步所有用户状态、用emit-stream监听服务器端事件
 
 23:46.980 --> 23:51.465
-we run multiple streams over mux-demux, we load balanced across
-multiple servers
+通过mux-demux运行多个streams，以及在不同服务器间做负载均很
 
 23:51.465 --> 23:55.430
-so, I am telling you I haven't actually demonstrate this yet
+这里还缺一个
 
 23:55.430 --> 24:02.460
-in order a browser, we have an rpc control interface with dnode
-so that's the all the things
+浏览器这边，我们用dnode来实现rpc接口调用，好了，全部完成
 
 24:02.460 --> 24:07.625
-so, let's actually run this beast
+让我们来启动这个“怪物”吧
 
 24:07.625 --> 24:16.010
-so, the first thing I'll do is I'll browserify the last version
-that wasn't any good
+首先要browserify最新版本代码
 
 24:16.010 --> 24:28.090
-so, staticbundle.js cuz I think I was messing with that earlier
-and I'll run the server on port 8000
+staticbundle.js，启动服务器并监听8000端口
 
 24:28.090 --> 24:34.380
-cool, and I can visit it, HOLA LISBOA, that's from dnode actually
+酷！可以访问了，HOLA LISBOA, 这是dnode在工作
 
 24:34.380 --> 24:39.395
-and here we just have a box, the box, it's not very fancy
+这里我们就只有一个盒子而已，还不够炫
 
 24:39.395 --> 24:41.720
-all you can do is drag it, right?
+能做的就是拖拽，对吧？
 
 24:41.720 --> 24:50.865
-but, if we have another user connected, and if I make it
-smaller again
+但是，当另外一个用户进来之后，我把它缩小点
 
 24:50.865 --> 24:56.050
-goodness, ok, so if I move the box over here, cool
-if I move it there from over here
+好，如果我把盒子移到这里，酷~~，如果从这里移动到那里
 
 24:56.050 --> 24:59.570
-you might have seen something like socket.io, and that's great
-that's reusable
+也许你已经闻到了socket.io的味道了吧，这很赞，重用性很高
 
 24:59.570 --> 25:02.115
-but, that's not intereasting enough
+不过，这还不够有趣
 
 25:02.115 --> 25:06.520
-let's actually have a load balanced server
+让我们来点负载均衡
 
 25:06.520 --> 25:16.785
-so, we'll run another server on port 8001 and connect it to other
-server on 8002, connected over stream and over everything
+我们在8001端口起一台服务器，并通过stream，将其和8000端口上的服务器相连
 
 25:16.785 --> 25:23.720
-so, oh, godness, it's a little bugness, oh no, damn it
-work damn it
+噢，我的天！有些小bug，哦，不，求你了，工作吧，工作吧！
 
 25:23.720 --> 25:33.640
-I am telling you this totally worked earlier, sort of 
-oh, there it goes, yes, it totally is working kind of a little bit
+我发誓它之前是好的，貌似……，噢，好了，工作了，尽管有些小瑕疵
 
 25:33.640 --> 25:34.965
-it's bug there but like, that's the basic idea
+尽管有bug，不过意思到了，这里就是展现一种思路和想法
 
 25:34.965 --> 25:44.765
-that is all that I have to say, we'll skip some pictures,
-use all of these modules, they are amazing
+好了，这就是我要讲的所有内容，我们再来看些描述模块的图片，它们真的非常赞
 
 25:44.765 --> 25:55.730
-thanks!
+谢谢！
