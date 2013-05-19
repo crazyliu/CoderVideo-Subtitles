@@ -7,7 +7,7 @@ Coder Video - Subtitles
 
 ### 贡献者
 
-以下结果由**git-summary**生成于**2013-5-19**
+以下结果由 **git-summary** 生成于 **2013-5-19**
 
     project  : CoderVideo-Subtitles  
     repo age : 7 months ago  
